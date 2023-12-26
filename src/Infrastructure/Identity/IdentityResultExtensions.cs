@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Application.Common.Models;
+﻿using ShopExample.Application.Common.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace CleanArchitecture.Infrastructure.Identity;
+namespace ShopExample.Infrastructure.Identity;
 
 public static class IdentityResultExtensions
 {

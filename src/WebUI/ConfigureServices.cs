@@ -1,12 +1,13 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Infrastructure.Persistence;
-using CleanArchitecture.WebUI.Services;
+﻿using ShopExample.Application.Common.Interfaces;
+using ShopExample.Infrastructure.Persistence;
+using ShopExample.WebUI.Services;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using ShopExample.WebUI.Services;
 using ZymLabs.NSwag.FluentValidation;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace ShopExample.WebUI;
 
 public static class ConfigureServices
 {

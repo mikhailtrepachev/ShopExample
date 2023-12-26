@@ -2,7 +2,7 @@
 
 using CleanArchitecture.Application.Common.Interfaces;
 
-namespace CleanArchitecture.WebUI.Services;
+namespace ShopExample.WebUI.Services;
 
 public class CurrentUserService : ICurrentUserService
 {

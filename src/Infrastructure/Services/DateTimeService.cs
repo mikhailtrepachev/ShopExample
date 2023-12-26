@@ -1,6 +1,6 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces;
 
-namespace CleanArchitecture.Infrastructure.Services;
+namespace ShopExample.Infrastructure.Services;
 
 public class DateTimeService : IDateTime
 {

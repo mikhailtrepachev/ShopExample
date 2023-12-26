@@ -1,15 +1,15 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Infrastructure.Files;
-using CleanArchitecture.Infrastructure.Identity;
-using CleanArchitecture.Infrastructure.Persistence;
-using CleanArchitecture.Infrastructure.Persistence.Interceptors;
-using CleanArchitecture.Infrastructure.Services;
+﻿using ShopExample.Application.Common.Interfaces;
+using ShopExample.Infrastructure.Files;
+using ShopExample.Infrastructure.Identity;
+using ShopExample.Infrastructure.Persistence;
+using ShopExample.Infrastructure.Persistence.Interceptors;
+using ShopExample.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace ShopExample.Infrastructure;
 
 public static class ConfigureServices
 {

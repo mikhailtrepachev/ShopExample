@@ -1,10 +1,10 @@
-﻿using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Infrastructure.Identity;
+﻿using ShopExample.Domain.Entities;
+using ShopExample.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace CleanArchitecture.Infrastructure.Persistence;
+namespace ShopExample.Infrastructure.Persistence;
 
 public class ApplicationDbContextInitialiser
 {

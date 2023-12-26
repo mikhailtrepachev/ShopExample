@@ -1,10 +1,10 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Domain.Common;
+﻿using ShopExample.Application.Common.Interfaces;
+using ShopExample.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace CleanArchitecture.Infrastructure.Persistence.Interceptors;
+namespace ShopExample.Infrastructure.Persistence.Interceptors;
 
 public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
 {

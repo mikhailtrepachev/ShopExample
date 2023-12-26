@@ -1,4 +1,4 @@
-using CleanArchitecture.Infrastructure.Persistence;
+using ShopExample.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 

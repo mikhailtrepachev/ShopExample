@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <RootNamespace>CleanArchitecture.Application</RootNamespace>
-        <AssemblyName>CleanArchitecture.Application</AssemblyName>
+        <RootNamespace>ShopExample.Application</RootNamespace>
+        <AssemblyName>ShopExample.Application</AssemblyName>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
@@ -16,6 +16,11 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Auto\Commands\" />
+      <Folder Include="Auto\Queries\" />
     </ItemGroup>
 
 </Project>

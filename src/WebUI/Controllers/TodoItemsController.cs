@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 
-namespace CleanArchitecture.WebUI.Controllers;
+namespace ShopExample.WebUI.Controllers;
 
 [Authorize]
 public class TodoItemsController : ApiControllerBase
