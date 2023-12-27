@@ -4,7 +4,7 @@ public class Card : BaseAuditableEntity
 {
     // TODO: Seller
 
-    public PersonalAuto PersonalAuto { get; set; } = new PersonalAuto(); // ???
+    public required PersonalAuto PersonalAuto { get; set; }
     
     public int Price { get; set; }
     

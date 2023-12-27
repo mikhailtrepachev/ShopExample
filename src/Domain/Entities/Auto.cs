@@ -2,9 +2,9 @@
 
 public class Auto : BaseAuditableEntity
 {
-    public string DistributorName { get; set; } = string.Empty;
+    public required string DistributorName { get; set; }
     
-    public string Modelname { get; set; } = string.Empty;
+    public required string ModelName { get; set; }
     
-    public int issueYear { get; set; }
+    public int IssueYear { get; set; }
 }

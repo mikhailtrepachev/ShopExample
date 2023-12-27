@@ -1,17 +1,20 @@
-﻿namespace ShopExample.Domain.Entities;
+using ShopExample.Application.Common.Mappings;
+using ShopExample.Domain.Entities;
 
-public class PersonalAuto : BaseAuditableEntity
+namespace ShopExample.Application.Auto.Dto;
+
+public class PersonalAutoDto : IMapFrom<PersonalAuto>
 {
-    public required Auto Auto { get; set; }
+    public int Id { get; set; }
 
-    public Domain.Enums.Colors Color { get; set; }
-
+    public required AutoDto Autos { get; set; }
+    
     public Domain.Enums.RegistrationState RegistrationState { get; set; }
 
     public required string RegistrationNumber { get; set; }
 
     public Domain.Enums.TechnicalState TechnicalState { get; set; }
-
+    
     public int WheelSize { get; set; }
 
     public int HorsePower { get; set; }

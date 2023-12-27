@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Auto Generated models
+src/WebUI/ClientApp/src/app/modules/shared/models/api/

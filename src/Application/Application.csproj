@@ -18,9 +18,4 @@
         <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Auto\Commands\" />
-      <Folder Include="Auto\Queries\" />
-    </ItemGroup>
-
 </Project>
