@@ -1,9 +1,9 @@
-﻿using CleanArchitecture.Application.Common.Exceptions;
+﻿using ShopExample.Application.Common.Exceptions;
 using FluentAssertions;
 using FluentValidation.Results;
 using NUnit.Framework;
 
-namespace CleanArchitecture.Application.UnitTests.Common.Exceptions;
+namespace ShopExample.Application.UnitTests.Common.Exceptions;
 
 public class ValidationExceptionTests
 {

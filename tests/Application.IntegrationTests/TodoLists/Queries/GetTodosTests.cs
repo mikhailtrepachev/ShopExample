@@ -1,10 +1,10 @@
-﻿using CleanArchitecture.Application.TodoLists.Queries.GetTodos;
-using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Domain.ValueObjects;
+﻿using ShopExample.Application.TodoLists.Queries.GetTodos;
+using ShopExample.Domain.Entities;
+using ShopExample.Domain.ValueObjects;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace CleanArchitecture.Application.IntegrationTests.TodoLists.Queries;
+namespace ShopExample.Application.IntegrationTests.TodoLists.Queries;
 
 using static Testing;
 

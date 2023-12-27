@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
+﻿using ShopExample.Application.Common.Interfaces;
 
 namespace ShopExample.Infrastructure.Services;
 

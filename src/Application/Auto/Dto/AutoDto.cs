@@ -1,6 +1,8 @@
-﻿namespace ShopExample.Application.Auto.Dto;
+﻿using ShopExample.Application.Common.Mappings;
 
-public class AutoDto : IMapFrom<Auto>
+namespace ShopExample.Application.Auto.Dto;
+
+public class AutoDto : IMapFrom<Domain.Entities.Auto>
 {
     
 }

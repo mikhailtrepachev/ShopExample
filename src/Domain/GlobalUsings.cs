@@ -1,6 +1,6 @@
-﻿global using CleanArchitecture.Domain.Common;
-global using CleanArchitecture.Domain.Entities;
-global using CleanArchitecture.Domain.Enums;
-global using CleanArchitecture.Domain.Events;
-global using CleanArchitecture.Domain.Exceptions;
-global using CleanArchitecture.Domain.ValueObjects;
+﻿global using ShopExample.Domain.Common;
+global using ShopExample.Domain.Entities;
+global using ShopExample.Domain.Enums;
+global using ShopExample.Domain.Events;
+global using ShopExample.Domain.Exceptions;
+global using ShopExample.Domain.ValueObjects;

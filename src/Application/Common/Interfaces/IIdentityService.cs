@@ -1,6 +1,6 @@
-﻿using CleanArchitecture.Application.Common.Models;
+﻿using ShopExample.Application.Common.Models;
 
-namespace CleanArchitecture.Application.Common.Interfaces;
+namespace ShopExample.Application.Common.Interfaces;
 
 public interface IIdentityService
 {

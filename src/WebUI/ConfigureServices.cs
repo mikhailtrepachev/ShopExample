@@ -7,7 +7,7 @@ using NSwag.Generation.Processors.Security;
 using ShopExample.WebUI.Services;
 using ZymLabs.NSwag.FluentValidation;
 
-namespace ShopExample.WebUI;
+namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ConfigureServices
 {

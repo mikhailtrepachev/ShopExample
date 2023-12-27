@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Domain.Enums;
+﻿namespace ShopExample.Domain.Enums;
 
 public enum RegistrationState
 {

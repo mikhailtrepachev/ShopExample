@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Application.Common.Exceptions;
+﻿using ShopExample.Application.Common.Exceptions;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

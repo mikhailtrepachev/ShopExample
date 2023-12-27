@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Domain.Common;
+﻿using ShopExample.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace MediatR;

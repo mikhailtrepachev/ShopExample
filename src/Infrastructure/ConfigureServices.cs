@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace ShopExample.Infrastructure;
+namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ConfigureServices
 {

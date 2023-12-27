@@ -1,9 +1,9 @@
-﻿using CleanArchitecture.Application.Common.Models;
-using CleanArchitecture.Application.TodoItems.Commands.CreateTodoItem;
-using CleanArchitecture.Application.TodoItems.Commands.DeleteTodoItem;
-using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
-using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItemDetail;
-using CleanArchitecture.Application.TodoItems.Queries.GetTodoItemsWithPagination;
+﻿using ShopExample.Application.Common.Models;
+using ShopExample.Application.TodoItems.Commands.CreateTodoItem;
+using ShopExample.Application.TodoItems.Commands.DeleteTodoItem;
+using ShopExample.Application.TodoItems.Commands.UpdateTodoItem;
+using ShopExample.Application.TodoItems.Commands.UpdateTodoItemDetail;
+using ShopExample.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;

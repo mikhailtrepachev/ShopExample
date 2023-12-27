@@ -1,8 +1,8 @@
-﻿using CleanArchitecture.Application.TodoLists.Commands.CreateTodoList;
-using CleanArchitecture.Application.TodoLists.Commands.DeleteTodoList;
-using CleanArchitecture.Application.TodoLists.Commands.UpdateTodoList;
-using CleanArchitecture.Application.TodoLists.Queries.ExportTodos;
-using CleanArchitecture.Application.TodoLists.Queries.GetTodos;
+﻿using ShopExample.Application.TodoLists.Commands.CreateTodoList;
+using ShopExample.Application.TodoLists.Commands.DeleteTodoList;
+using ShopExample.Application.TodoLists.Commands.UpdateTodoList;
+using ShopExample.Application.TodoLists.Queries.ExportTodos;
+using ShopExample.Application.TodoLists.Queries.GetTodos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
