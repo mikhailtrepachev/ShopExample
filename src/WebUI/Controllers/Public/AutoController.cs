@@ -22,7 +22,7 @@ public class AutoController : ApiControllerBase
         return Ok(result);
     }
     
-    [HttpGet("autos")]
+    [HttpGet("list")]
     public async Task<ActionResult<AutoListDto>> GetList()
     {
         var query = new GetAutoListQuery();

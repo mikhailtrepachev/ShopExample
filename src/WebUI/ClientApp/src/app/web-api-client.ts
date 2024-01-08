@@ -751,7 +751,7 @@ export class AutoClient implements IAutoClient {
     }
 
     getList(): Observable<AutoListDto> {
-        let url_ = this.baseUrl + "/api/autos/autos";
+        let url_ = this.baseUrl + "/api/autos/list";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {

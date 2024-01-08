@@ -12,7 +12,19 @@ export const routes: Routes = [
   { path: 'counter', component: CounterComponent },
   { path: 'fetch-data', component: FetchDataComponent },
   { path: 'todo', component: TodoComponent, canActivate: [AuthorizeGuard] },
-  { path: 'token', component: TokenComponent, canActivate: [AuthorizeGuard] }
+  { path: 'token', component: TokenComponent, canActivate: [AuthorizeGuard] },
+  {
+    path: '',
+    //canActivate,
+    //component: AuthenticatedUserLayoutComponent
+    children: [
+      {
+        path: 'admin',
+        canActivate: [AuthorizeGuard],
+        loadChildren: () => import('@app/modules/admin/admin.module').then(m => m.AdminModule),
+      }
+    ]
+  }
 ];
 
 @NgModule({

@@ -509,7 +509,7 @@
         }
       }
     },
-    "/api/autos/autos": {
+    "/api/autos/list": {
       "get": {
         "tags": [
           "Auto"
