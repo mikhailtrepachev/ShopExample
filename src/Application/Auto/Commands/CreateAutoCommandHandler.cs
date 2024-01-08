@@ -34,7 +34,7 @@ public class CreateAutoCommandHandler : IRequestHandler<CreateAutoCommand, AutoD
         var result = await _dbContext.Autos
             .Where(properties => properties.Id == auto.Id)
             .ProjectTo<AutoDto>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstAsync(cancellationToken);
 
         return result;
     }

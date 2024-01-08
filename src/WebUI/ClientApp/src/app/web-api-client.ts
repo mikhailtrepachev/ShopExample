@@ -680,6 +680,177 @@ export class WeatherForecastClient implements IWeatherForecastClient {
     }
 }
 
+export interface IAutoClient {
+    get(autoId: number): Observable<AutoDto>;
+    getList(): Observable<AutoListDto>;
+    create(commandDto: CreateAutoCommandDto): Observable<AutoDto>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class AutoClient implements IAutoClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    get(autoId: number): Observable<AutoDto> {
+        let url_ = this.baseUrl + "/api/autos/{autoId}";
+        if (autoId === undefined || autoId === null)
+            throw new Error("The parameter 'autoId' must be defined.");
+        url_ = url_.replace("{autoId}", encodeURIComponent("" + autoId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<AutoDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<AutoDto>;
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<AutoDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AutoDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getList(): Observable<AutoListDto> {
+        let url_ = this.baseUrl + "/api/autos/autos";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetList(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<AutoListDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<AutoListDto>;
+        }));
+    }
+
+    protected processGetList(response: HttpResponseBase): Observable<AutoListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AutoListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    create(commandDto: CreateAutoCommandDto): Observable<AutoDto> {
+        let url_ = this.baseUrl + "/api/autos";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(commandDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<AutoDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<AutoDto>;
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<AutoDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = AutoDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export class PaginatedListOfTodoItemBriefDto implements IPaginatedListOfTodoItemBriefDto {
     items?: TodoItemBriefDto[];
     pageNumber?: number;
@@ -1325,6 +1496,142 @@ export interface IWeatherForecast {
     temperatureC?: number;
     temperatureF?: number;
     summary?: string | undefined;
+}
+
+export class AutoDto implements IAutoDto {
+    id?: number;
+    distributorName?: string;
+    modelName?: string;
+    issueYear?: number;
+
+    constructor(data?: IAutoDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.distributorName = _data["distributorName"];
+            this.modelName = _data["modelName"];
+            this.issueYear = _data["issueYear"];
+        }
+    }
+
+    static fromJS(data: any): AutoDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AutoDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["distributorName"] = this.distributorName;
+        data["modelName"] = this.modelName;
+        data["issueYear"] = this.issueYear;
+        return data;
+    }
+}
+
+export interface IAutoDto {
+    id?: number;
+    distributorName?: string;
+    modelName?: string;
+    issueYear?: number;
+}
+
+export class AutoListDto implements IAutoListDto {
+    items?: AutoDto[];
+
+    constructor(data?: IAutoListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(AutoDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): AutoListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AutoListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IAutoListDto {
+    items?: AutoDto[];
+}
+
+export class CreateAutoCommandDto implements ICreateAutoCommandDto {
+    distributorName?: string;
+    modelName?: string;
+    issueYear?: number;
+
+    constructor(data?: ICreateAutoCommandDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.distributorName = _data["distributorName"];
+            this.modelName = _data["modelName"];
+            this.issueYear = _data["issueYear"];
+        }
+    }
+
+    static fromJS(data: any): CreateAutoCommandDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateAutoCommandDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["distributorName"] = this.distributorName;
+        data["modelName"] = this.modelName;
+        data["issueYear"] = this.issueYear;
+        return data;
+    }
+}
+
+export interface ICreateAutoCommandDto {
+    distributorName?: string;
+    modelName?: string;
+    issueYear?: number;
 }
 
 export interface FileResponse {
