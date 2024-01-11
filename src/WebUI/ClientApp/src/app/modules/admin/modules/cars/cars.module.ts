@@ -4,6 +4,7 @@ import { CarsRoutingModule } from "./cars-routing.module";
 import { CarsFacade } from "./cars.facade";
 import { CarListComponent } from "./components/car-list/car-list.component";
 import { CarsService } from "./services/cars.service";
+import { SharedModule } from "@app/modules/shared/shared.module";
 
 @NgModule({
     declarations: [
@@ -11,6 +12,7 @@ import { CarsService } from "./services/cars.service";
         CarListComponent
     ],
     imports: [
+        SharedModule,
         CarsRoutingModule
     ],
     providers: [

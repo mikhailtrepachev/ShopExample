@@ -49,4 +49,14 @@ public class AutoController : ApiControllerBase
 
         return CreatedAtAction(nameof(Get), new { Id = result.Id }, result);
     }
+
+    [HttpDelete("delete/{carId}")]
+    public async Task<ActionResult> DeleteCar(int carId)
+    {
+        var command = new DeleteCarCommand { Id = carId };
+
+        await Mediator.Send(command);
+
+        return NoContent();
+    }
 }

@@ -1,5 +1,7 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { LucideAngularModule, Trash, Pencil } from "lucide-angular";
 
 export { HttpService } from './services/http.service'
 
@@ -8,10 +10,14 @@ export { HttpService } from './services/http.service'
 
     ],
     imports: [
-        FormsModule
+        CommonModule,
+        FormsModule,
+        LucideAngularModule.pick({ Trash, Pencil })
     ],
     exports: [
-        FormsModule
+        CommonModule,
+        FormsModule,
+        LucideAngularModule
     ],
     providers: [
         

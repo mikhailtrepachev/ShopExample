@@ -4,7 +4,9 @@ import { ICarList } from "./models/car-list.model";
 import { CarsMapper } from "./services/cars.mapper";
 import { Injectable } from "@angular/core";
 
-Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class CarsFacade { 
     constructor(
         private readonly _carsService: CarsService
@@ -12,5 +14,9 @@ export class CarsFacade {
 
     public getCarList(): Observable<ICarList> {
         return this._carsService.getCarList().pipe(map(res => CarsMapper.toCarList(res)))
+    }
+
+    public deleteCar(carId: number): Observable<void> {
+        return this._carsService.deleteCar(carId);
     }
 }

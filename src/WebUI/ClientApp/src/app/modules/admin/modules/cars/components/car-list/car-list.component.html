@@ -1,6 +1,7 @@
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
+            <th scope="col" style="width: 5%;"></th>
             <th scope="col">Distibutor name</th>
             <th scope="col">Model name</th>
             <th scope="col">Issue date</th>
@@ -8,7 +9,21 @@
     </thead>
     <tbody>
         <ng-container *ngFor="let item of items">
-            {{ item.distributorName }}
+            <tr>
+                <td>
+                    <lucide-icon name="trash" class="delete-button" (click)="deleteCar(item.id)"></lucide-icon>
+                    <lucide-icon name="pencil" class="edit-button"></lucide-icon>
+                </td>
+                <td>
+                    {{ item.distributorName }}
+                </td>
+                <td>
+                    {{ item.modelName }}
+                </td>
+                <td>
+                    {{ item.issueYear }}
+                </td>
+            </tr>
         </ng-container>
     </tbody>
 </table>
