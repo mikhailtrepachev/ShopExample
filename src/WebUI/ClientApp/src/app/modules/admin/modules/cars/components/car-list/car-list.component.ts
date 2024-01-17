@@ -24,6 +24,8 @@ export class CarListComponent implements OnChanges {
     }
 
     public deleteCar(carId: number): void {
-        this._carsFacade.deleteCar(carId).subscribe();
+        this._carsFacade.deleteCar(carId).subscribe(_ => {
+            this.items = this.items.filter(item => item.id !== carId);
+        });
     }
 }

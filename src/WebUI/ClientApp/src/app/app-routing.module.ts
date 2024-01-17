@@ -8,7 +8,7 @@ import { TodoComponent } from './components/todo/todo.component';
 import { TokenComponent } from './components/token/token.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '', loadChildren: () => import('@app/modules/promotional/promotional.module').then(m => m.PromotionalModule) },
   { path: 'counter', component: CounterComponent },
   { path: 'fetch-data', component: FetchDataComponent },
   { path: 'todo', component: TodoComponent, canActivate: [AuthorizeGuard] },
