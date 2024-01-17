@@ -5,11 +5,13 @@ import { CarsFacade } from "./cars.facade";
 import { CarListComponent } from "./components/car-list/car-list.component";
 import { CarsService } from "./services/cars.service";
 import { SharedModule } from "@app/modules/shared/shared.module";
+import { CarFormComponent } from "./components/car-form/car-form.component";
 
 @NgModule({
     declarations: [
         CarListPageComponent,
-        CarListComponent
+        CarListComponent,
+        CarFormComponent
     ],
     imports: [
         SharedModule,
