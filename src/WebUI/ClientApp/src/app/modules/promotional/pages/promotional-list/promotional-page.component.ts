@@ -6,6 +6,6 @@ import { Component } from "@angular/core";
     styleUrls: ['./promotional-page.component.scss']
 })
 
-export class PromotionalPage { 
+export class PromotionalPageComponent { 
     
 }

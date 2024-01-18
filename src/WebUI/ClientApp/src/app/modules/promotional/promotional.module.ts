@@ -3,11 +3,15 @@ import { PromotionalRoutingModule } from "./promotional-routing.module";
 import { CoreModule } from "../core/core.module";
 import { SharedModule } from "../shared/shared.module";
 import { PromotionalFacade } from "./promotional.facade";
-import { PromotionalPage } from "./pages/promotional-list/promotional-page.component";
+import { PromotionalPageComponent } from "./pages/promotional-list/promotional-page.component";
+import { PromotionalAddPageComponent } from "./pages/promotional-add/promotional-add-page.component";
+import { CarSelectorComponent } from "./components/car-selector/car-selector.component";
 
 @NgModule({
     declarations: [
-        PromotionalPage
+        PromotionalPageComponent,
+        PromotionalAddPageComponent,
+        CarSelectorComponent
     ],
     imports: [
         PromotionalRoutingModule,

@@ -1,11 +1,17 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { PromotionalPage } from "./pages/promotional-list/promotional-page.component";
+import { PromotionalPageComponent } from "./pages/promotional-list/promotional-page.component";
+import { PromotionalAddPageComponent } from "./pages/promotional-add/promotional-add-page.component";
 
 const routes: Routes = [
     {
         path: '',
-        component: PromotionalPage
+        component: PromotionalPageComponent
+    },
+    {
+        path: 'promotional/add',
+        //canActivate
+        component: PromotionalAddPageComponent
     }
 ];
 
