@@ -32,6 +32,8 @@ export class CarSelectorComponent implements OnChanges {
 
         this.form = this._formBuilder.group({
             id: [null],
+            selectedDistributor: [null, Validators.required],
+            selectedModel: [null, Validators.required],
             auto: [null, Validators.required],
             color: [null, Validators.required],
             registrationState: [null, Validators.required],
