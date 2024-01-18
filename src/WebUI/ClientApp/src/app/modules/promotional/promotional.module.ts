@@ -6,6 +6,7 @@ import { PromotionalFacade } from "./promotional.facade";
 import { PromotionalPageComponent } from "./pages/promotional-list/promotional-page.component";
 import { PromotionalAddPageComponent } from "./pages/promotional-add/promotional-add-page.component";
 import { CarSelectorComponent } from "./components/car-selector/car-selector.component";
+import { PromotionalService } from "./services/promotional.service";
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { CarSelectorComponent } from "./components/car-selector/car-selector.com
 
     ],
     providers: [
-       PromotionalFacade
+       PromotionalFacade,
+       PromotionalService
     ]
 })
 

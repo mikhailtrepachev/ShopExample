@@ -1,3 +1,17 @@
+<ng-container *ngFor="let item of items">
+  <div class="d-grid gap-2 py-2">
+    <a type="button" class="btn btn-outline-primary btn-block selector">
+        <div class="col">
+          <lucide-icon name="car"></lucide-icon>
+        </div>
+        <div class="col">
+          {{ item.distributorName }}
+          {{ item.modelName }}
+          {{ item.issueYear }}
+        </div>
+    </a>
+  </div>
+</ng-container>
 <div class="d-grid gap-2">
     <button type="button" class="btn btn-outline-primary btn-block selector" data-bs-toggle="modal" data-bs-target="#createPersonalCar">
         <lucide-icon name="plus"></lucide-icon>
@@ -12,7 +26,24 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
+          <form [formGroup]="form" (submit)="onSubmit()">
+            <div class="row">
+                <div class="col-7">
+                    <div class="form-group required py-2">
+                        <label>
+                            Choose distributor:
+                        </label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group required py-2">
+                        <label>
+                            Model:
+                        </label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
