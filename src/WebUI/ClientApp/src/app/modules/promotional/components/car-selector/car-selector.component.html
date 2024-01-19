@@ -43,16 +43,28 @@
                         <label>
                             Model:
                         </label>
+                        <select class="form-select" formControlName="selectedModel">
+                            <ng-container *ngFor="let item of items">
+                                <option *ngIf="item.distributorName == this.form.value.selectedDistributor" [ngValue]="item.modelName">
+                                  {{ item.modelName }}      
+                                </option>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <div class="form-group required py-2">
+                        <label>
+                            Issue year:
+                        </label>
                         <select class="form-select" formControlName="auto">
                             <ng-container *ngFor="let item of items">
-                                <option *ngIf="item.distributorName == this.form.value.selectedDistributor">
-                                    
+                                <option *ngIf="item.modelName === form.value.selectedModel && item.distributorName === form.value.selectedDistributor"
+                                  [ngValue]="item">
+                                  {{ item.issueYear }}
                                 </option>
-
                             </ng-container>
-                                <option value="item">{{ item.modelName }}</option>
-                          </select>
+                        </select>
                     </div>
+
                 </div>
             </div>
           </form>

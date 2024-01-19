@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { IPersonalCarForm } from "../../models/personal-car-form.model";
 import { PromotionalFacade } from "../../promotional.facade";
 import { ICarList } from "../../models/car-list.model";
-import { Observable } from "rxjs";
 import { ICarListItem } from "../../models/car-list-item.model";
 
 @Component({
@@ -47,5 +46,4 @@ export class CarSelectorComponent implements OnChanges {
     public onSubmit(): void {
 
     }
-
  }
