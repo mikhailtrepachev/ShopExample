@@ -34,7 +34,7 @@
                             Distributor:
                         </label>
                         <select class="form-select" formControlName="selectedDistributor">
-                            <option *ngFor="let item of items" [ngValue]="item.distributorName">
+                            <option *ngFor="let item of groupedItems" [ngValue]="item">
                                 {{ item.distributorName }}
                             </option>
                         </select>
@@ -44,9 +44,9 @@
                             Model:
                         </label>
                         <select class="form-select" formControlName="selectedModel">
-                            <ng-container *ngFor="let item of items">
+                            <ng-container *ngFor="let item of groupedItems">
                                 <option *ngIf="item.distributorName == this.form.value.selectedDistributor" [ngValue]="item.modelName">
-                                  {{ item.modelName }}      
+                                  {{ item.cars[0].modelName }}      
                                 </option>
                             </ng-container>
                         </select>

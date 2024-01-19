@@ -12,9 +12,12 @@ import { ICarListItem } from "../../models/car-list-item.model";
 })
 
 export class CarSelectorComponent implements OnChanges {
-    public form: FormGroup;
 
+    public form: FormGroup;
     public items: ICarListItem[] = [];
+    public groupedItems: any[] = [];
+
+
 
     @Input() public cars: ICarList
 
@@ -28,6 +31,25 @@ export class CarSelectorComponent implements OnChanges {
 
     public ngOnChanges(): void {
         this.items = this.cars?.items || [];
+
+        this.groupedItems = this.items.reduce((acc, car) => {
+            const existingGroup = acc.find(group => group.distributorName === car.distributorName);
+          
+            if (existingGroup) {
+              existingGroup.cars.push({ id: car.id, distributorName: car.distributorName, modelName: car.modelName });
+            } else {
+              acc.push({
+                distributorName: car.distributorName,
+                cars: [{ id: car.id,
+                    distributorName: car.distributorName,
+                    modelName: car.modelName }]
+              });
+            }
+          
+            return acc;
+          }, []);
+          
+        console.log(this.groupedItems);
 
         this.form = this._formBuilder.group({
             id: [null],
