@@ -1,6 +1,6 @@
 export enum TechnicalState {
-    Excellent,
-    Good,
-    Bad,
-    Broken
+    Excellent = 'Excellent',
+    Good = 'Good',
+    Bad = 'Bad',
+    Broken = 'Broken'
 }

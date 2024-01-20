@@ -4,6 +4,9 @@ import { IPersonalCarForm } from "../../models/personal-car-form.model";
 import { PromotionalFacade } from "../../promotional.facade";
 import { ICarList } from "../../models/car-list.model";
 import { ICarListItem } from "../../models/car-list-item.model";
+import { Colors } from "@app/shared/models/colors.enum";
+import { RegistrationState } from "@app/shared/models/registration-state.enum";
+import { TechnicalState } from "@app/shared/models/technical-state.enum";
 
 @Component({
     selector: 'app-car-selector',
@@ -16,8 +19,11 @@ export class CarSelectorComponent implements OnChanges {
     public form: FormGroup;
     public items: ICarListItem[] = [];
     public groupedItems: any[] = [];
+    public personalCar: IPersonalCarForm;
 
-
+    public colors = Colors;
+    public registrationStates = RegistrationState;
+    public technicalStates = TechnicalState;
 
     @Input() public cars: ICarList
 
@@ -32,29 +38,12 @@ export class CarSelectorComponent implements OnChanges {
     public ngOnChanges(): void {
         this.items = this.cars?.items || [];
 
-        this.groupedItems = this.items.reduce((acc, car) => {
-            const existingGroup = acc.find(group => group.distributorName === car.distributorName);
+        this.groupingItems();
           
-            if (existingGroup) {
-              existingGroup.cars.push({ id: car.id, distributorName: car.distributorName, modelName: car.modelName });
-            } else {
-              acc.push({
-                distributorName: car.distributorName,
-                cars: [{ id: car.id,
-                    distributorName: car.distributorName,
-                    modelName: car.modelName }]
-              });
-            }
-          
-            return acc;
-          }, []);
-          
-        console.log(this.groupedItems);
-
         this.form = this._formBuilder.group({
-            id: [null],
             selectedDistributor: [null, Validators.required],
             selectedModel: [null, Validators.required],
+            selectedYear: [null, Validators.required],
             auto: [null, Validators.required],
             color: [null, Validators.required],
             registrationState: [null, Validators.required],
@@ -67,5 +56,55 @@ export class CarSelectorComponent implements OnChanges {
 
     public onSubmit(): void {
 
+      console.log(this.form.value);
+    }
+
+    public onChangeDistributor(): void {
+
+      var distributorIndex = this.groupedItems.findIndex(item => item.distributorName === this.form.value.selectedDistributor);
+
+      if (distributorIndex !== -1 && this.groupedItems[distributorIndex].cars.length > 0) {
+        const firstCar = this.groupedItems[distributorIndex].cars[0];
+        this.form.patchValue({
+          selectedModel: firstCar.modelName,
+          selectedYear: firstCar.issueYears[0]
+        });
+      }
+    }
+
+    public getEnumValues(enumType: any): string[] {
+      return Object.values(enumType);
+    }
+
+    private groupingItems(): void {
+        this.groupedItems = this.items.reduce((acc, car) => {
+          const existingGroup = acc.find(group => group.distributorName === car.distributorName);
+      
+          if (existingGroup) {
+              const existingCar = existingGroup.cars.find(existingCar => existingCar.modelName === car.modelName);
+              if (existingCar) {
+                  existingCar.issueYears.push(car.issueYear);
+              } else {
+                  existingGroup.cars.push({
+                      id: car.id,
+                      distributorName: car.distributorName,
+                      modelName: car.modelName,
+                      issueYears: [car.issueYear]
+                  });
+              }
+          } else {
+              acc.push({
+                  distributorName: car.distributorName,
+                  cars: [{
+                      id: car.id,
+                      distributorName: car.distributorName,
+                      modelName: car.modelName,
+                      issueYears: [car.issueYear]
+                  }]
+              });
+          }
+      
+          return acc;
+      }, []);
     }
  }

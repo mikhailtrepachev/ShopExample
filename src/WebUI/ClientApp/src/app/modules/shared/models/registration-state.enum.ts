@@ -1,11 +1,11 @@
 export enum RegistrationState {
-    CZ,
-    DE,
-    A,
-    SK,
-    S,
-    PL,
-    H,
-    NL,
-    IT
+    CZ = 'Czech',
+    D = 'Germany',
+    A = 'Austria',
+    SK = 'Slovakia',
+    S = 'Slovenia',
+    PL = 'Poland',
+    H = 'Hungary',
+    NL = 'Netherlands',
+    IT = 'Italy'
 }

@@ -1,17 +1,3 @@
-<!-- <ng-container *ngFor="let item of items">
-  <div class="d-grid gap-2 py-2">
-    <a type="button" class="btn btn-outline-primary btn-block selector">
-        <div class="col">
-          <lucide-icon name="car"></lucide-icon>
-        </div>
-        <div class="col">
-          {{ item.distributorName }}
-          {{ item.modelName }}
-          {{ item.issueYear }}
-        </div>
-    </a>
-  </div>
-</ng-container> -->
 <div class="d-grid gap-2">
     <button type="button" class="btn btn-outline-primary btn-block selector" data-bs-toggle="modal" data-bs-target="#createPersonalCar">
         <lucide-icon name="plus"></lucide-icon>
@@ -33,8 +19,8 @@
                         <label>
                             Distributor:
                         </label>
-                        <select class="form-select" formControlName="selectedDistributor">
-                            <option *ngFor="let item of groupedItems" [ngValue]="item">
+                        <select class="form-select" formControlName="selectedDistributor" (change)="onChangeDistributor()">
+                            <option *ngFor="let item of groupedItems" [ngValue]="item.distributorName">
                                 {{ item.distributorName }}
                             </option>
                         </select>
@@ -45,9 +31,13 @@
                         </label>
                         <select class="form-select" formControlName="selectedModel">
                             <ng-container *ngFor="let item of groupedItems">
-                                <option *ngIf="item.distributorName == this.form.value.selectedDistributor" [ngValue]="item.modelName">
-                                  {{ item.cars[0].modelName }}      
-                                </option>
+                              <ng-container *ngIf="item.distributorName == this.form.value.selectedDistributor">
+                                <ng-container *ngFor="let car of item.cars">
+                                  <option [ngValue]="car.modelName">
+                                    {{ car.modelName }}      
+                                  </option>
+                                </ng-container>
+                              </ng-container>
                             </ng-container>
                         </select>
                     </div>
@@ -55,23 +45,75 @@
                         <label>
                             Issue year:
                         </label>
-                        <select class="form-select" formControlName="auto">
-                            <ng-container *ngFor="let item of items">
-                                <option *ngIf="item.modelName === form.value.selectedModel && item.distributorName === form.value.selectedDistributor"
-                                  [ngValue]="item">
-                                  {{ item.issueYear }}
-                                </option>
+                        <select class="form-select" formControlName="selectedYear">
+                            <ng-container *ngFor="let item of groupedItems">
+                              <ng-container *ngIf="item.distributorName == this.form.value.selectedDistributor">
+                                <ng-container *ngFor="let car of item.cars">
+                                  <ng-container *ngIf="car.modelName === form.value.selectedModel">
+                                    <option *ngFor="let year of car.issueYears" [ngValue]="year">
+                                      {{ year }}
+                                    </option>
+                                  </ng-container>
+                                </ng-container>
+                              </ng-container>
                             </ng-container>
                         </select>
                     </div>
-
+                    <div class="form-group required py-2">
+                      <label>
+                        Color:
+                      </label>
+                      <select class="form-select" formControlName="color">
+                        <option *ngFor="let color of colors | keyvalue" [ngValue]="color">
+                          {{ color.value }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group required py-2">
+                      <label>
+                        Registration country:
+                      </label>
+                      <select class="form-select" formControlName="registrationState">
+                        <option *ngFor="let registrationState of registrationStates | keyvalue" [ngValue]="registrationState">
+                          {{ registrationState.value }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group required py-2">
+                      <label>
+                        Registration number:
+                      </label>
+                      <input type="text" class="form-control" formControlName="registrationNumber">
+                    </div>
+                    <div class="form-group required py-2">
+                      <label>
+                        Technical state:
+                      </label>
+                      <select class="form-select" formControlName="technicalState">
+                        <option *ngFor="let technicalState of technicalStates | keyvalue" [ngValue]="technicalState">
+                          {{ technicalState.value }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group required py-2">
+                      <label>
+                        Wheel size:
+                      </label>
+                        <input type="number" class="form-control" formControlName="wheelSize">
+                    </div>
+                    <div class="form-group required py-2">
+                      <label>
+                        Horse powers:
+                      </label>
+                      <input type="number" class="form-control" formControlName="horsePower">
+                    </div>
                 </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Add a car</button>
+          <button type="button" class="btn btn-primary" (click)="onSubmit()">Add a car</button>
         </div>
       </div>
     </div>
