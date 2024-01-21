@@ -50,6 +50,12 @@ public class AutoController : ApiControllerBase
         return CreatedAtAction(nameof(Get), new { Id = result.Id }, result);
     }
 
+    [HttpPost]
+    public async Task<ActionResult<PersonalAutoDto>> CreatePersonalAuto(CreatePersonalAutoCommandDto commandDto)
+    {
+        
+    }
+
     [HttpDelete("delete/{carId}")]
     public async Task<ActionResult> DeleteCar(int carId)
     {

@@ -2,9 +2,9 @@ import { AutoListDto } from "@app/shared/models/api/auto/auto-list-dto.model";
 import { ICarList } from "../models/car-list.model";
 
 export class PromotionalMapper { 
-    public static toCarList(cars: AutoListDto): ICarList {
+    public static toCarList(data: AutoListDto): ICarList {
         return {
-            items: cars?.items.length > 0 ? cars.items.map(car => ({
+            items: data?.items.length > 0 ? data.items.map(car => ({
                 id: car.id,
                 distributorName: car.distributorName,
                 modelName: car.modelName,
@@ -12,4 +12,6 @@ export class PromotionalMapper {
             })) : [],
         };
     }
+
+    public static toPersonalCarCommand(data: )
 }

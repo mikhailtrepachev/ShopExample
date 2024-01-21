@@ -7,6 +7,7 @@ import { ICarListItem } from "../../models/car-list-item.model";
 import { Colors } from "@app/shared/models/colors.enum";
 import { RegistrationState } from "@app/shared/models/registration-state.enum";
 import { TechnicalState } from "@app/shared/models/technical-state.enum";
+import { AutoDto } from "@app/shared/models/api/auto/auto-dto.model";
 
 @Component({
     selector: 'app-car-selector',
@@ -44,7 +45,7 @@ export class CarSelectorComponent implements OnChanges {
             selectedDistributor: [null, Validators.required],
             selectedModel: [null, Validators.required],
             selectedYear: [null, Validators.required],
-            auto: [null, Validators.required],
+            auto: [null],
             color: [null, Validators.required],
             registrationState: [null, Validators.required],
             registrationNumber: [null, Validators.required],
@@ -56,7 +57,30 @@ export class CarSelectorComponent implements OnChanges {
 
     public onSubmit(): void {
 
-      console.log(this.form.value);
+        this.form.markAllAsTouched();
+        
+        if(!this.form.valid) {
+            return;
+        }
+
+        const { selectedDistributor, selectedModel, selectedYear, color, registrationState, registrationNumber,
+            technicalState, wheelSize, horsePower } = this.form.value;
+
+
+        var auto = this.items.find(item => 
+            item.distributorName === selectedDistributor &&
+            item.modelName === selectedModel &&
+            item.issueYear === selectedYear) as AutoDto;
+
+        this.submitted.emit({
+            auto,
+            color,
+            registrationNumber,
+            registrationState,
+            technicalState,
+            wheelSize,
+            horsePower
+        })        
     }
 
     public onChangeDistributor(): void {

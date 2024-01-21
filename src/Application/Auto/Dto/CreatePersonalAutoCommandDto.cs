@@ -1,10 +1,8 @@
-﻿namespace ShopExample.Domain.Entities;
+namespace ShopExample.Application.Auto.Dto;
 
-public class PersonalAuto : BaseAuditableEntity
+public class CreatePersonalAutoCommandDto
 {
-    public required Auto Auto { get; set; }
-    
-    public ApplicationUser User { get; set; }
+    public required AutoDto Auto { get; set; }
 
     public Domain.Enums.Colors Color { get; set; }
 

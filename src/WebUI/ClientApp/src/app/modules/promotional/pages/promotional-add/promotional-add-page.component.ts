@@ -1,7 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { PromotionalFacade } from "../../promotional.facade";
 import { first, tap } from "rxjs";
 import { ICarList } from "../../models/car-list.model";
+import { IPersonalCarForm } from "../../models/personal-car-form.model";
+import { CarSelectorComponent } from "../../components/car-selector/car-selector.component";
 
 @Component({
     selector: 'app-promotional-add-page',
@@ -12,12 +14,22 @@ import { ICarList } from "../../models/car-list.model";
 export class PromotionalAddPageComponent implements OnInit {
     public cars: ICarList = null;
 
+    @ViewChild(CarSelectorComponent) public carSelectorForm: CarSelectorComponent;
+
     constructor(
         public readonly _promotionalFacade: PromotionalFacade
     ) { }
 
     public ngOnInit(): void {
         this.loadCars()
+    }
+
+    public createPersonalCar(data: IPersonalCarForm): void {
+        console.log(data);
+    }
+
+    public onCancel(): void {
+        this.carSelectorForm.form.markAsPristine();
     }
 
     private loadCars(): void {

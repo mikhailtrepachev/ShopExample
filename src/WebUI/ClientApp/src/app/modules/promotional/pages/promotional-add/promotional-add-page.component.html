@@ -1,2 +1,2 @@
 <h3 class="py-2">Select a car</h3>
-<app-car-selector [cars]="cars"></app-car-selector>
+<app-car-selector #form [cars]="cars" (submitted)="createPersonalCar($event)" (cancelled)="onCancel()"></app-car-selector>
