@@ -130,5 +130,7 @@ export class CarSelectorComponent implements OnChanges {
       
           return acc;
       }, []);
+
+      console.log(this.groupedItems);
     }
  }

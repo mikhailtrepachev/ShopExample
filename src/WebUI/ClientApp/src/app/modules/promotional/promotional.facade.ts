@@ -4,7 +4,7 @@ import { ICarList } from "./models/car-list.model";
 import { PromotionalService } from "./services/promotional.service";
 import { PromotionalMapper } from "./services/promotional.mapper";
 import { IPersonalCarForm } from "./models/personal-car-form.model";
-import { IPersonalCarItem } from "./models/personal-car-item.model";
+import { PersonalAutoDto } from "@app/shared/models/api/auto/personal-auto-dto.model";
 
 @Injectable({
     providedIn: 'root'
@@ -18,8 +18,8 @@ export class PromotionalFacade {
         return this._promotionalService.getCarList().pipe(map(res => PromotionalMapper.toCarList(res)))
     }
 
-    public createPersonalCar(): Observable<IPersonalCarItem> {
-        return this._promotionalService.createPersonalCar(PromotionalMapper.toPersonalCarCommand())
+    public createPersonalCar(personalCar: IPersonalCarForm): Observable<PersonalAutoDto> {
+        return this._promotionalService.createPersonalCar(PromotionalMapper.toPersonalCarCommand(personalCar))
     }
 
 }

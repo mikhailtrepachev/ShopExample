@@ -2,8 +2,8 @@ namespace ShopExample.Application.Auto.Dto;
 
 public class CreatePersonalAutoCommandDto
 {
-    public required AutoDto Auto { get; set; }
-
+    public required int AutoId { get; set; }
+    
     public Domain.Enums.Colors Color { get; set; }
 
     public Domain.Enums.RegistrationState RegistrationState { get; set; }

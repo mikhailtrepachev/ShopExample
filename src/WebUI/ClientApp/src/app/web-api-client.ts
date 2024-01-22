@@ -683,7 +683,10 @@ export class WeatherForecastClient implements IWeatherForecastClient {
 export interface IAutoClient {
     get(autoId: number): Observable<AutoDto>;
     getList(): Observable<AutoListDto>;
+    getPersonalAuto(personalAutoId: number): Observable<PersonalAutoDto>;
+    getPersonalAutoList(): Observable<PersonalAutoListDto>;
     create(commandDto: CreateAutoCommandDto): Observable<AutoDto>;
+    createPersonalAuto(commandDto: CreatePersonalAutoCommandDto): Observable<PersonalAutoDto>;
     deleteCar(carId: number): Observable<FileResponse>;
 }
 
@@ -799,6 +802,105 @@ export class AutoClient implements IAutoClient {
         return _observableOf(null as any);
     }
 
+    getPersonalAuto(personalAutoId: number): Observable<PersonalAutoDto> {
+        let url_ = this.baseUrl + "/api/autos/personal/get/{personalAutoId}";
+        if (personalAutoId === undefined || personalAutoId === null)
+            throw new Error("The parameter 'personalAutoId' must be defined.");
+        url_ = url_.replace("{personalAutoId}", encodeURIComponent("" + personalAutoId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPersonalAuto(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPersonalAuto(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PersonalAutoDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PersonalAutoDto>;
+        }));
+    }
+
+    protected processGetPersonalAuto(response: HttpResponseBase): Observable<PersonalAutoDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PersonalAutoDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getPersonalAutoList(): Observable<PersonalAutoListDto> {
+        let url_ = this.baseUrl + "/api/autos/personal/get/list";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPersonalAutoList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPersonalAutoList(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PersonalAutoListDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PersonalAutoListDto>;
+        }));
+    }
+
+    protected processGetPersonalAutoList(response: HttpResponseBase): Observable<PersonalAutoListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PersonalAutoListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
     create(commandDto: CreateAutoCommandDto): Observable<AutoDto> {
         let url_ = this.baseUrl + "/api/autos";
         url_ = url_.replace(/[?&]$/, "");
@@ -841,6 +943,58 @@ export class AutoClient implements IAutoClient {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = AutoDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    createPersonalAuto(commandDto: CreatePersonalAutoCommandDto): Observable<PersonalAutoDto> {
+        let url_ = this.baseUrl + "/api/autos/personal/create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(commandDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreatePersonalAuto(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreatePersonalAuto(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PersonalAutoDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PersonalAutoDto>;
+        }));
+    }
+
+    protected processCreatePersonalAuto(response: HttpResponseBase): Observable<PersonalAutoDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PersonalAutoDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1646,6 +1800,129 @@ export interface IAutoListDto {
     items?: AutoDto[];
 }
 
+export class PersonalAutoDto implements IPersonalAutoDto {
+    id?: number;
+    autos?: AutoDto | undefined;
+    registrationState?: RegistrationState;
+    registrationNumber?: string;
+    technicalState?: TechnicalState;
+    wheelSize?: number;
+    horsePower?: number;
+
+    constructor(data?: IPersonalAutoDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.autos = _data["autos"] ? AutoDto.fromJS(_data["autos"]) : <any>undefined;
+            this.registrationState = _data["registrationState"];
+            this.registrationNumber = _data["registrationNumber"];
+            this.technicalState = _data["technicalState"];
+            this.wheelSize = _data["wheelSize"];
+            this.horsePower = _data["horsePower"];
+        }
+    }
+
+    static fromJS(data: any): PersonalAutoDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PersonalAutoDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["autos"] = this.autos ? this.autos.toJSON() : <any>undefined;
+        data["registrationState"] = this.registrationState;
+        data["registrationNumber"] = this.registrationNumber;
+        data["technicalState"] = this.technicalState;
+        data["wheelSize"] = this.wheelSize;
+        data["horsePower"] = this.horsePower;
+        return data;
+    }
+}
+
+export interface IPersonalAutoDto {
+    id?: number;
+    autos?: AutoDto | undefined;
+    registrationState?: RegistrationState;
+    registrationNumber?: string;
+    technicalState?: TechnicalState;
+    wheelSize?: number;
+    horsePower?: number;
+}
+
+export enum RegistrationState {
+    CZ = 0,
+    DE = 1,
+    A = 2,
+    SK = 3,
+    S = 4,
+    PL = 5,
+    H = 6,
+    NL = 7,
+    IT = 8,
+}
+
+export enum TechnicalState {
+    Excellent = 0,
+    Good = 1,
+    Bad = 2,
+    Broken = 3,
+}
+
+export class PersonalAutoListDto implements IPersonalAutoListDto {
+    items?: PersonalAutoDto[];
+
+    constructor(data?: IPersonalAutoListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(PersonalAutoDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PersonalAutoListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PersonalAutoListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPersonalAutoListDto {
+    items?: PersonalAutoDto[];
+}
+
 export class CreateAutoCommandDto implements ICreateAutoCommandDto {
     distributorName?: string;
     modelName?: string;
@@ -1688,6 +1965,75 @@ export interface ICreateAutoCommandDto {
     distributorName?: string;
     modelName?: string;
     issueYear?: number;
+}
+
+export class CreatePersonalAutoCommandDto implements ICreatePersonalAutoCommandDto {
+    autoId?: number;
+    color?: Colors;
+    registrationState?: RegistrationState;
+    registrationNumber?: string;
+    technicalState?: TechnicalState;
+    wheelSize?: number;
+    horsePower?: number;
+
+    constructor(data?: ICreatePersonalAutoCommandDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.autoId = _data["autoId"];
+            this.color = _data["color"];
+            this.registrationState = _data["registrationState"];
+            this.registrationNumber = _data["registrationNumber"];
+            this.technicalState = _data["technicalState"];
+            this.wheelSize = _data["wheelSize"];
+            this.horsePower = _data["horsePower"];
+        }
+    }
+
+    static fromJS(data: any): CreatePersonalAutoCommandDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreatePersonalAutoCommandDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["autoId"] = this.autoId;
+        data["color"] = this.color;
+        data["registrationState"] = this.registrationState;
+        data["registrationNumber"] = this.registrationNumber;
+        data["technicalState"] = this.technicalState;
+        data["wheelSize"] = this.wheelSize;
+        data["horsePower"] = this.horsePower;
+        return data;
+    }
+}
+
+export interface ICreatePersonalAutoCommandDto {
+    autoId?: number;
+    color?: Colors;
+    registrationState?: RegistrationState;
+    registrationNumber?: string;
+    technicalState?: TechnicalState;
+    wheelSize?: number;
+    horsePower?: number;
+}
+
+export enum Colors {
+    Blue = 0,
+    White = 1,
+    Black = 2,
+    Orange = 3,
+    Purple = 4,
+    Red = 5,
 }
 
 export interface FileResponse {

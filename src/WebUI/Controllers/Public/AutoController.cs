@@ -30,6 +30,26 @@ public class AutoController : ApiControllerBase
         return Ok(result);
     }
 
+    [HttpGet("personal/get/{personalAutoId}")]
+    public async Task<ActionResult<PersonalAutoDto>> GetPersonalAuto(int personalAutoId)
+    {
+        var query = new GetPersonalAutoQuery
+        {
+            Id = personalAutoId
+        };
+
+        var result = await Mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpGet("personal/get/list")]
+    public async Task<ActionResult<PersonalAutoListDto>> GetPersonalAutoList()
+    {
+        var query = new GetPersonalAutoListQuery();
+        var result = await Mediator.Send(query);
+        return Ok(result);
+    }
+
     [HttpPost]
     public async Task<ActionResult<AutoDto>> Create(CreateAutoCommandDto commandDto)
     {
@@ -50,11 +70,29 @@ public class AutoController : ApiControllerBase
         return CreatedAtAction(nameof(Get), new { Id = result.Id }, result);
     }
 
-    [HttpPost]
+    [HttpPost("personal/create")]
     public async Task<ActionResult<PersonalAutoDto>> CreatePersonalAuto(CreatePersonalAutoCommandDto commandDto)
     {
-        
-    }
+        if (commandDto == null)
+        {
+            return BadRequest();
+        }
+
+        var command = new CreatePersonalAutoCommand
+        {
+            AutoId = commandDto.AutoId,
+            Color = commandDto.Color,
+            TechnicalState = commandDto.TechnicalState,
+            RegistrationNumber = commandDto.RegistrationNumber,
+            RegistrationState = commandDto.RegistrationState,
+            HorsePower = commandDto.HorsePower,
+            WheelSize = commandDto.WheelSize
+        };
+
+        var result = await Mediator.Send(command);
+
+        return CreatedAtAction(nameof(GetPersonalAuto), new { Id = result.Id }, result);
+    } 
 
     [HttpDelete("delete/{carId}")]
     public async Task<ActionResult> DeleteCar(int carId)

@@ -3,9 +3,9 @@
 public class PersonalAuto : BaseAuditableEntity
 {
     public required Auto Auto { get; set; }
-    
-    public ApplicationUser User { get; set; }
 
+    public required string UserId { get; set; }
+    
     public Domain.Enums.Colors Color { get; set; }
 
     public Domain.Enums.RegistrationState RegistrationState { get; set; }

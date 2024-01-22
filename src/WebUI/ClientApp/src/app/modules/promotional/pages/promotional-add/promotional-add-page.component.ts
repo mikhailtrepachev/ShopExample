@@ -25,7 +25,7 @@ export class PromotionalAddPageComponent implements OnInit {
     }
 
     public createPersonalCar(data: IPersonalCarForm): void {
-        console.log(data);
+        this._promotionalFacade.createPersonalCar(data).subscribe();
     }
 
     public onCancel(): void {

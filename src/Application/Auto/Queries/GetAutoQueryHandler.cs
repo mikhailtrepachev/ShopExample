@@ -30,6 +30,8 @@ public class GetAutoQueryHandler : IRequestHandler<GetAutoQuery, AutoDto>
         {
             throw new Exception();
         }
+        
+        //TODO: Custom exception for not founded response
 
         return autoDto;
     }
