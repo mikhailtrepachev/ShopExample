@@ -29,7 +29,6 @@ export class CarsService extends HttpService {
 
     public deleteCar(carId: number): Observable<void> {
         const url = `${this._baseUrl}api/autos/delete/${carId}`;
-        console.log(url)
         return this._httpClient.delete<void>(url);
     }
 }

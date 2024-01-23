@@ -1,7 +1,21 @@
+<p-toast></p-toast>
+
+<div class="d-grid gap-2 py-1" *ngFor="let personalCar of personalCarItems">
+  <button type="button" class="btn btn-outline-primary btn-block selector" (click)="onSelectPersonalCar(personalCar)">
+      {{ personalCar.autos.distributorName }}
+      {{ personalCar.autos.modelName }}
+      {{ personalCar.color }}
+  </button>
+</div>
+
 <div class="d-grid gap-2">
     <button type="button" class="btn btn-outline-primary btn-block selector" data-bs-toggle="modal" data-bs-target="#createPersonalCar">
         <lucide-icon name="plus"></lucide-icon>
     </button>
+</div>
+
+<div class="py-3">
+  <button type="button" class="btn btn-primary" (click)="onNextStage()">Continue</button>
 </div>
 
 <div class="modal fade" id="createPersonalCar" tabindex="-1" aria-labelledby="createPersonalCarLabel" aria-hidden="true">
@@ -64,8 +78,8 @@
                         Color:
                       </label>
                       <select class="form-select" formControlName="color">
-                        <option *ngFor="let color of colors | keyvalue" [ngValue]="color">
-                          {{ color.value }}
+                        <option *ngFor="let color of colors" [ngValue]="color.type">
+                          {{ color.name }}
                         </option>
                       </select>
                     </div>
@@ -74,8 +88,8 @@
                         Registration country:
                       </label>
                       <select class="form-select" formControlName="registrationState">
-                        <option *ngFor="let registrationState of registrationStates | keyvalue" [ngValue]="registrationState">
-                          {{ registrationState.value }}
+                        <option *ngFor="let registrationState of registrationStates" [ngValue]="registrationState.type">
+                          {{ registrationState.name }}
                         </option>
                       </select>
                     </div>
@@ -90,8 +104,8 @@
                         Technical state:
                       </label>
                       <select class="form-select" formControlName="technicalState">
-                        <option *ngFor="let technicalState of technicalStates | keyvalue" [ngValue]="technicalState">
-                          {{ technicalState.value }}
+                        <option *ngFor="let technicalState of technicalStates" [ngValue]="technicalState.type">
+                          {{ technicalState.name }}
                         </option>
                       </select>
                     </div>
@@ -113,7 +127,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="onSubmit()">Add a car</button>
+          <button type="button" class="btn btn-primary" (click)="onSubmit()" data-bs-dismiss="modal">Add a car</button>
         </div>
       </div>
     </div>

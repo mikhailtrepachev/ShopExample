@@ -50,6 +50,17 @@ public class AutoController : ApiControllerBase
         return Ok(result);
     }
 
+    [HttpGet("card/get/{cardId}")]
+    public async Task<ActionResult<CardDto>> GetCard(int cardId)
+    {
+        var query = new GetCardQuery
+        {
+            Id = cardId
+        };
+        var result = await Mediator.Send(query);
+        return Ok(result);
+    }
+
     [HttpPost]
     public async Task<ActionResult<AutoDto>> Create(CreateAutoCommandDto commandDto)
     {
@@ -67,7 +78,7 @@ public class AutoController : ApiControllerBase
 
         var result = await Mediator.Send(command);
 
-        return CreatedAtAction(nameof(Get), new { Id = result.Id }, result);
+        return CreatedAtAction(nameof(GetCard), new { Id = result.Id }, result);
     }
 
     [HttpPost("personal/create")]
@@ -92,7 +103,26 @@ public class AutoController : ApiControllerBase
         var result = await Mediator.Send(command);
 
         return CreatedAtAction(nameof(GetPersonalAuto), new { Id = result.Id }, result);
-    } 
+    }
+
+    [HttpPost("card/create")]
+    public async Task<ActionResult<CardDto>> CreateCard(CreateCardCommandDto commandDto)
+    {
+        if (commandDto == null)
+        {
+            return BadRequest();
+        }
+
+        var command = new CreateCardCommand
+        {
+            PersonalAutoId = commandDto.PersonalAutoId,
+            Price = commandDto.Price
+        };
+
+        var result = await Mediator.Send(command);
+
+        return CreatedAtAction(nameof(GetCard), new { Id = result.Id }, result);
+    }
 
     [HttpDelete("delete/{carId}")]
     public async Task<ActionResult> DeleteCar(int carId)

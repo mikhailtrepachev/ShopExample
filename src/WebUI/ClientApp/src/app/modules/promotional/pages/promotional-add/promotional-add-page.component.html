@@ -1,2 +1,5 @@
-<h3 class="py-2">Select a car</h3>
-<app-car-selector #form [cars]="cars" (submitted)="createPersonalCar($event)" (cancelled)="onCancel()"></app-car-selector>
+<h3 class="py-2" *ngIf="isOnSelect; else cardTextBlock">Select a car</h3>
+<ng-template #cardTextBlock>{{ selectedPersonalCar.autos.distributorName }} {{ selectedPersonalCar.autos.modelName }}</ng-template>
+<app-car-selector *ngIf="isOnSelect" #form [cars]="cars" [personalCars]="personalCars" (submitted)="createPersonalCar($event)" 
+    (cancelled)="onCancel()" (submittedPersonalCar)="onSelectedPersonalCar($event)"></app-car-selector>
+<app-card-form *ngIf="!isOnSelect" [selectedPersonalCar]="selectedPersonalCar" (submitted)="createCard($event)"></app-card-form>

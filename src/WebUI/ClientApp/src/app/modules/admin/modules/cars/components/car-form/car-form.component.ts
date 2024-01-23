@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ICarForm } from "../../models/car-form.model";
 import { CarsFacade } from "../../cars.facade";
 import { Subscription } from "rxjs";
+import { MessageService } from "primeng/api";
 
 @Component({
     selector: 'app-car-form',
     templateUrl: './car-form.component.html',
-    styleUrls: ['./car-form.component.scss']
+    styleUrls: ['./car-form.component.scss'],
+    providers: [MessageService]
 })
 
 export class CarFormComponent implements OnInit {
@@ -17,8 +19,8 @@ export class CarFormComponent implements OnInit {
     @Output() public readonly cancelled = new EventEmitter();
 
     constructor(
-        private readonly _carsFacade: CarsFacade,
-        private readonly _formBuilder: FormBuilder
+        private readonly _formBuilder: FormBuilder,
+        private readonly _messageService: MessageService
     ) { }
 
     public ngOnInit(): void {
@@ -34,7 +36,7 @@ export class CarFormComponent implements OnInit {
         this.form.markAsTouched();
 
         if(!this.form.valid) {
-            console.log('not valid');
+            this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Please provide all information about the car.' })
             return;
         }
 
@@ -49,7 +51,7 @@ export class CarFormComponent implements OnInit {
 
         this.form.markAsPristine();
 
-        console.log('emitted')
+        this._messageService.add({ severity: 'success', summary: 'Success', detail: 'The car was successfully added.' })
     }
 
     public onCancel(): void {

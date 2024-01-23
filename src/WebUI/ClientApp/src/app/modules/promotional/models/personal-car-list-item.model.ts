@@ -3,7 +3,7 @@ import { Colors } from "@app/shared/models/api/colors.model";
 import { RegistrationState } from "@app/shared/models/api/registration-state.model";
 import { TechnicalState } from "@app/shared/models/api/technical-state.model";
 
-export interface IPersonalCarForm {
+export interface IPersonalCarListItem { 
     id: number,
     autos: AutoDto,
     color: Colors,

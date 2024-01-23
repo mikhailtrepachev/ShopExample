@@ -685,8 +685,10 @@ export interface IAutoClient {
     getList(): Observable<AutoListDto>;
     getPersonalAuto(personalAutoId: number): Observable<PersonalAutoDto>;
     getPersonalAutoList(): Observable<PersonalAutoListDto>;
+    getCard(cardId: number): Observable<CardDto>;
     create(commandDto: CreateAutoCommandDto): Observable<AutoDto>;
     createPersonalAuto(commandDto: CreatePersonalAutoCommandDto): Observable<PersonalAutoDto>;
+    createCard(commandDto: CreateCardCommandDto): Observable<CardDto>;
     deleteCar(carId: number): Observable<FileResponse>;
 }
 
@@ -901,6 +903,57 @@ export class AutoClient implements IAutoClient {
         return _observableOf(null as any);
     }
 
+    getCard(cardId: number): Observable<CardDto> {
+        let url_ = this.baseUrl + "/api/autos/card/get/{cardId}";
+        if (cardId === undefined || cardId === null)
+            throw new Error("The parameter 'cardId' must be defined.");
+        url_ = url_.replace("{cardId}", encodeURIComponent("" + cardId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCard(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCard(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<CardDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<CardDto>;
+        }));
+    }
+
+    protected processGetCard(response: HttpResponseBase): Observable<CardDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CardDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
     create(commandDto: CreateAutoCommandDto): Observable<AutoDto> {
         let url_ = this.baseUrl + "/api/autos";
         url_ = url_.replace(/[?&]$/, "");
@@ -995,6 +1048,58 @@ export class AutoClient implements IAutoClient {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = PersonalAutoDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    createCard(commandDto: CreateCardCommandDto): Observable<CardDto> {
+        let url_ = this.baseUrl + "/api/autos/card/create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(commandDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateCard(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateCard(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<CardDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<CardDto>;
+        }));
+    }
+
+    protected processCreateCard(response: HttpResponseBase): Observable<CardDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CardDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1806,6 +1911,7 @@ export class PersonalAutoDto implements IPersonalAutoDto {
     registrationState?: RegistrationState;
     registrationNumber?: string;
     technicalState?: TechnicalState;
+    color?: Colors;
     wheelSize?: number;
     horsePower?: number;
 
@@ -1825,6 +1931,7 @@ export class PersonalAutoDto implements IPersonalAutoDto {
             this.registrationState = _data["registrationState"];
             this.registrationNumber = _data["registrationNumber"];
             this.technicalState = _data["technicalState"];
+            this.color = _data["color"];
             this.wheelSize = _data["wheelSize"];
             this.horsePower = _data["horsePower"];
         }
@@ -1844,6 +1951,7 @@ export class PersonalAutoDto implements IPersonalAutoDto {
         data["registrationState"] = this.registrationState;
         data["registrationNumber"] = this.registrationNumber;
         data["technicalState"] = this.technicalState;
+        data["color"] = this.color;
         data["wheelSize"] = this.wheelSize;
         data["horsePower"] = this.horsePower;
         return data;
@@ -1856,6 +1964,7 @@ export interface IPersonalAutoDto {
     registrationState?: RegistrationState;
     registrationNumber?: string;
     technicalState?: TechnicalState;
+    color?: Colors;
     wheelSize?: number;
     horsePower?: number;
 }
@@ -1877,6 +1986,15 @@ export enum TechnicalState {
     Good = 1,
     Bad = 2,
     Broken = 3,
+}
+
+export enum Colors {
+    Blue = 0,
+    White = 1,
+    Black = 2,
+    Orange = 3,
+    Purple = 4,
+    Red = 5,
 }
 
 export class PersonalAutoListDto implements IPersonalAutoListDto {
@@ -1921,6 +2039,54 @@ export class PersonalAutoListDto implements IPersonalAutoListDto {
 
 export interface IPersonalAutoListDto {
     items?: PersonalAutoDto[];
+}
+
+export class CardDto implements ICardDto {
+    id?: number;
+    personalAuto?: PersonalAutoDto;
+    price?: number;
+    isPromoted?: boolean;
+
+    constructor(data?: ICardDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.personalAuto = _data["personalAuto"] ? PersonalAutoDto.fromJS(_data["personalAuto"]) : <any>undefined;
+            this.price = _data["price"];
+            this.isPromoted = _data["isPromoted"];
+        }
+    }
+
+    static fromJS(data: any): CardDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CardDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["personalAuto"] = this.personalAuto ? this.personalAuto.toJSON() : <any>undefined;
+        data["price"] = this.price;
+        data["isPromoted"] = this.isPromoted;
+        return data;
+    }
+}
+
+export interface ICardDto {
+    id?: number;
+    personalAuto?: PersonalAutoDto;
+    price?: number;
+    isPromoted?: boolean;
 }
 
 export class CreateAutoCommandDto implements ICreateAutoCommandDto {
@@ -2027,13 +2193,48 @@ export interface ICreatePersonalAutoCommandDto {
     horsePower?: number;
 }
 
-export enum Colors {
-    Blue = 0,
-    White = 1,
-    Black = 2,
-    Orange = 3,
-    Purple = 4,
-    Red = 5,
+export class CreateCardCommandDto implements ICreateCardCommandDto {
+    personalAutoId?: number;
+    price?: number;
+    isPromoted?: boolean;
+
+    constructor(data?: ICreateCardCommandDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.personalAutoId = _data["personalAutoId"];
+            this.price = _data["price"];
+            this.isPromoted = _data["isPromoted"];
+        }
+    }
+
+    static fromJS(data: any): CreateCardCommandDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateCardCommandDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["personalAutoId"] = this.personalAutoId;
+        data["price"] = this.price;
+        data["isPromoted"] = this.isPromoted;
+        return data;
+    }
+}
+
+export interface ICreateCardCommandDto {
+    personalAutoId?: number;
+    price?: number;
+    isPromoted?: boolean;
 }
 
 export interface FileResponse {

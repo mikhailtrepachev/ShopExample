@@ -1,0 +1,10 @@
+<form [formGroup]="form" (submit)="onSubmit()">
+    <div class="form-group required py-2">
+        <label>
+          Price:
+        </label>
+          <input type="number" class="form-control" formControlName="price">
+      </div>
+</form>
+
+<button type="button" class="btn btn-primary" (click)="onSubmit()">Create offer</button>
