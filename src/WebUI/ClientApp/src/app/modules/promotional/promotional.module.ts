@@ -9,6 +9,8 @@ import { CarSelectorComponent } from "./components/car-selector/car-selector.com
 import { PromotionalService } from "./services/promotional.service";
 import { CardFormComponent } from "./components/card-form/card-form.component";
 import { CardListComponent } from "./components/card-list/card-list.component";
+import { CardDetailComponent } from "./components/card-detail/card-detail.component";
+import { PromotionalDetailPage } from "./pages/promotional-detail/promotional-detail-page.component";
 
 @NgModule({
     declarations: [
@@ -16,7 +18,9 @@ import { CardListComponent } from "./components/card-list/card-list.component";
         PromotionalAddPageComponent,
         CarSelectorComponent,
         CardFormComponent,
-        CardListComponent
+        CardListComponent,
+        CardDetailComponent,
+        PromotionalDetailPage
     ],
     imports: [
         PromotionalRoutingModule,

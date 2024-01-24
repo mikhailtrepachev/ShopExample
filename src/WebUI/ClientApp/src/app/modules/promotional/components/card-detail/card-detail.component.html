@@ -1,0 +1,58 @@
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-lg-8">
+        <!-- Car Details Section -->
+        <div class="card mb-3">
+          <img src="../../../../../assets/dsc06532-1298x730.jpg" class="card-img-top" alt="Car Image">
+          <div class="card-body">
+            <h5 class="card-title">Car Model: {{ card.personalAuto.autos.distributorName }} {{ card.personalAuto.autos.modelName }}, year: {{ card.personalAuto.autos.issueYear }}</h5>
+            <p class="card-text">Description of the car. Additional details about the car, such as features and specifications.</p>
+          </div>
+        </div>
+
+        <!-- Seller Information Section -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Seller Information</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Seller Name: John Doe</li>
+              <li class="list-group-item">Contact Number: +1 123-456-7890</li>
+              <li class="list-group-item">Email: john@example.com</li>
+              <li class="list-group-item">Location: City, Country</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price and Contact Form Section -->
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Price</h5>
+            <p class="card-text">$ {{ card.price }}</p>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Contact the Seller</h5>
+            <form>
+              <div class="mb-3">
+                <label for="fullName" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="fullName" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">Your Message</label>
+                <textarea class="form-control" id="message" rows="4" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

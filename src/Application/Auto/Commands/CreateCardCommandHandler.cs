@@ -39,6 +39,7 @@ public class CreateCardCommandHandler : IRequestHandler<CreateCardCommand, CardD
         var card = new Card()
         {
             UserId = userId, 
+            Description = command.Description,
             PersonalAuto = personalAuto, 
             IsPromoted = false, 
             Price = command.Price

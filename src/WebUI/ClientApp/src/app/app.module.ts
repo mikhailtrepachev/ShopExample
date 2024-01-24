@@ -9,9 +9,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
-import { CounterComponent } from './components/counter/counter.component';
-import { FetchDataComponent } from './components/fetch-data/fetch-data.component';
-import { TodoComponent } from './components/todo/todo.component';
 import { TokenComponent } from './components/token/token.component';
 
 import { ApiAuthorizationModule } from 'api-authorization/api-authorization.module';
@@ -23,9 +20,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
-    TodoComponent,
     TokenComponent
   ],
   imports: [

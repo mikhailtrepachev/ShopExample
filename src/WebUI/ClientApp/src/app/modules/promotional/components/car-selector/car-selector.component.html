@@ -3,8 +3,8 @@
 <div class="d-grid gap-2 py-1" *ngFor="let personalCar of personalCarItems">
   <button type="button" class="btn btn-outline-primary btn-block selector" (click)="onSelectPersonalCar(personalCar)">
       {{ personalCar.autos.distributorName }}
-      {{ personalCar.autos.modelName }}
-      {{ personalCar.color }}
+      {{ personalCar.autos.modelName }}, {{ personalCar.autos.issueYear }}
+      ({{ personalCar.color.name }})
   </button>
 </div>
 

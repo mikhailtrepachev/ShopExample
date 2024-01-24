@@ -3,6 +3,8 @@ using ShopExample.Application.Common.Behaviours;
 using ShopExample.Application.Common.Exceptions;
 using FluentValidation;
 using MediatR;
+using ShopExample.Application.Common.Authorization;
+using ShopExample.Application.Common.Interfaces;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -20,6 +22,8 @@ public static class ConfigureServices
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
 
         });
+
+        services.AddAuthorizersFromAssembley(Assembly.GetAssembly(typeof(IAuthorizer<>)));
 
         return services;
     }

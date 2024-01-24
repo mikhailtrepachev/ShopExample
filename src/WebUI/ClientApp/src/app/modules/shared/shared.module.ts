@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LucideAngularModule, Trash, Pencil, Plus, Car } from "lucide-angular";
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
+import { MessageService } from "primeng/api";
 
 export { HttpService } from './services/http.service'
 
@@ -28,7 +29,7 @@ export { HttpService } from './services/http.service'
         MessagesModule
     ],
     providers: [
-        
+        MessageService
     ]
 })
 

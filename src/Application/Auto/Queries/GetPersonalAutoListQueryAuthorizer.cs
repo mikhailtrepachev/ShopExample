@@ -1,6 +1,12 @@
-﻿namespace ShopExample.Application.Auto.Queries;
+﻿using ShopExample.Application.Authorization.Requirements;
+using ShopExample.Application.Common.Authorization;
 
-public class GetPersonalAutoListQueryAuthorizer
+namespace ShopExample.Application.Auto.Queries;
+
+public class GetPersonalAutoListQueryAuthorizer : AbstractAuthorizer<GetPersonalAutoListQuery>
 {
-    //TODO: Authorizer
+    public override void BuildPolicy(GetPersonalAutoListQuery query)
+    {
+        UseRequirement(new PersonalAutoListReadRequirement());
+    }
 }

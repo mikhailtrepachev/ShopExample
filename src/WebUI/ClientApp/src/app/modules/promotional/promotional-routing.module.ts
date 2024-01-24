@@ -3,6 +3,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { PromotionalPageComponent } from "./pages/promotional-list/promotional-page.component";
 import { PromotionalAddPageComponent } from "./pages/promotional-add/promotional-add-page.component";
 import { CardFormComponent } from "./components/card-form/card-form.component";
+import { PromotionalDetailPage } from "./pages/promotional-detail/promotional-detail-page.component";
+import { AuthorizeGuard } from "api-authorization/authorize.guard";
 
 const routes: Routes = [
     {
@@ -11,8 +13,12 @@ const routes: Routes = [
     },
     {
         path: 'promotional/add',
-        //canActivate
+        canActivate: [AuthorizeGuard],
         component: PromotionalAddPageComponent
+    },
+    {
+        path: 'promotional/detail/:id',
+        component: PromotionalDetailPage
     }
 ];
 

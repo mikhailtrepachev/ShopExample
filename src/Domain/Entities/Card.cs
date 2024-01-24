@@ -9,6 +9,8 @@ public class Card : BaseAuditableEntity
     public int Price { get; set; }
     
     public bool IsPromoted { get; set; }
+
+    public string? Description { get; set; }
     
     // TODO: Image -> localstorage
     

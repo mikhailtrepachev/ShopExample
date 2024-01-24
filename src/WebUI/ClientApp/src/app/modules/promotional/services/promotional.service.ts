@@ -22,7 +22,7 @@ export class PromotionalService extends HttpService {
     }
 
     public getCard(cardId: number): Observable<CardDto> {
-        const url = `${this._baseUrl}api/autos/card/get/${cardId}}`;
+        const url = `${this._baseUrl}api/autos/card/get/${cardId}`;
         return this._httpClient.get<CardDto>(url);
     }
 

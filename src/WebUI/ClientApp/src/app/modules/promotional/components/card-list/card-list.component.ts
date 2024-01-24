@@ -15,5 +15,7 @@ export class CardListComponent implements OnChanges{
 
     public ngOnChanges(): void {
         this.cardListItems = this.cards?.items || [];
+
+        console.log(this.cardListItems);
     }
 }

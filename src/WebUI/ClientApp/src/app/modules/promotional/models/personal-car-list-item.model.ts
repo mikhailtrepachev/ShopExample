@@ -1,15 +1,15 @@
 import { AutoDto } from "@app/shared/models/api/auto/auto-dto.model";
-import { Colors } from "@app/shared/models/api/colors.model";
-import { RegistrationState } from "@app/shared/models/api/registration-state.model";
-import { TechnicalState } from "@app/shared/models/api/technical-state.model";
+import { IRegistrationState } from "./registration.state";
+import { ITechnicalState } from "./technical.state";
+import { IColorState } from "./color.state";
 
 export interface IPersonalCarListItem { 
     id: number,
     autos: AutoDto,
-    color: Colors,
-    registrationState: RegistrationState,
+    color: IColorState,
+    registrationState: IRegistrationState,
     registrationNumber: string,
-    technicalState: TechnicalState,
+    technicalState: ITechnicalState,
     wheelSize: number,
     horsePower: number 
 }

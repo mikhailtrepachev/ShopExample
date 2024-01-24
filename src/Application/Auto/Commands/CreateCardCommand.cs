@@ -6,6 +6,8 @@ namespace ShopExample.Application.Auto.Commands;
 public class CreateCardCommand : IRequest<CardDto>
 {
     public required int PersonalAutoId { get; set; }
+
+    public string? Description { get; set; }
     
     public int Price { get; set; }
     

@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AdminLayoutComponent } from "./components/admin-layout/admin-layout.component";
+import { AuthorizeGuard } from "api-authorization/authorize.guard";
 
 const routes: Routes = [
     {
@@ -9,7 +10,7 @@ const routes: Routes = [
         children: [
             { 
                 path: 'cars',
-                //canActivate,
+                canActivate: [AuthorizeGuard],
                 loadChildren: () => import('@app/modules/admin/modules/cars/cars.module').then(m => m.CarsModule),
             },
         ]

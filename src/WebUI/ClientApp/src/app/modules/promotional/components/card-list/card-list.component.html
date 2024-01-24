@@ -1,14 +1,14 @@
 <div class="row">
     <ng-container *ngFor="let card of cardListItems">
       <div class="col-md-4 mb-4">
-        <div class="card border-primary rounded card-hover">
-          <img src="car1.jpg" class="card-img-top" alt="Car Image">
+        <div class="card border-primary rounded card-hover" [routerLink]="['/promotional/detail', card.id]">
+          <img src="../../../../../assets/dsc06532-1298x730.jpg" class="card-img-top" alt="Car Image">
           <div class="card-body">
             <h5 class="card-title">{{ card.personalAuto.autos.distributorName }}</h5>
             <p class="card-text">Model {{ card.personalAuto.autos.modelName }}, Year: {{ card.personalAuto.autos.issueYear }}</p>
             <p class="card-text">Price: ${{ card.price }}</p>
           </div>
-          <div class="card-footer bg-primary text-white text-center">{{ card.personalAuto.technicalState }}</div>
+          <div class="card-footer bg-primary text-white text-center">{{ card.personalAuto.technicalState.name }}</div>
         </div>
       </div>
     </ng-container>
