@@ -10,3 +10,8 @@ Technologies used: ASP.NET, Entity Framework, IdentityServer, MediatR, Reinforce
 
 The server part is based on the Clean Architecture, the client application is divided into modules and components. The facade pattern is also used.
 
+
+TODO:
+- Cover the application with tests
+- Visual design rework
+- Section with personal promotional offers
