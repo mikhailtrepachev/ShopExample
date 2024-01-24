@@ -45,7 +45,7 @@ public static class ConfigureServices
             // Add the fluent validations schema processor
             configure.SchemaProcessors.Add(fluentValidationSchemaProcessor);
 
-            configure.Title = "CleanArchitecture API";
+            configure.Title = "ShopExample API";
             configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
             {
                 Type = OpenApiSecuritySchemeType.ApiKey,
