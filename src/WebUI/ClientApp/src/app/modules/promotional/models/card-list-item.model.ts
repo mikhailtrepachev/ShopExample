@@ -5,5 +5,6 @@ export interface ICardListItem {
     id: number,
     personalAuto: IPersonalCarListItem;
     price: number,
-    isPromoted: boolean
+    isPromoted: boolean,
+    description: string
 }

@@ -26,7 +26,7 @@ export class CardFormComponent implements OnChanges {
     public ngOnChanges(): void {
         this.form = this._formBuilder.group({
             price: [null, Validators.required],
-            desciption: [null]
+            description: [null]
         });
 
     }
@@ -39,14 +39,14 @@ export class CardFormComponent implements OnChanges {
             return;
         }
 
-        const { price, desciption } = this.form.value;
+        const { price, description } = this.form.value;
         
         var personalCarId = this.selectedPersonalCar.id;
 
         this.submitted.emit({
             price,
             personalCarId,
-            desciption
+            description
         } as ICardForm );
 
         this._messageService.add({ severity: 'success', summary: 'Success', detail: 'Your ad has been successfully published!' })

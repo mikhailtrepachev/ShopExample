@@ -33,7 +33,8 @@ export class PromotionalMapper {
             id: data.id,
             personalAuto: this.toPersonalCar(data.personalAuto),
             isPromoted: data.isPromoted,
-            price: data.price
+            price: data.price,
+            description: data.description
         } as ICardListItem;
     }
 
@@ -43,7 +44,8 @@ export class PromotionalMapper {
                 id: card.id,
                 personalAuto: this.toPersonalCar(card.personalAuto),
                 isPromoted: card.isPromoted,
-                price: card.price
+                price: card.price,
+                description: card.description
             })) : [],
         };
     }
@@ -93,7 +95,8 @@ export class PromotionalMapper {
     public static toCardCommand(card: ICardForm): CreateCardCommandDto {
         return {
             personalAutoId: card.personalCarId,
-            price: card.price
+            price: card.price,
+            description: card.description
         } as CreateCardCommandDto;
     }
 }

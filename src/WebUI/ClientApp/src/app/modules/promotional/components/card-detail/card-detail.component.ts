@@ -11,7 +11,7 @@ export class CardDetailComponent implements OnChanges {
 
     @Input() public card: ICardListItem = null;
     
-    public ngOnChanges(): void {
-        console.log(this.card);
+    public ngOnChanges(changes: SimpleChanges): void {
+        console.log(changes)
     }
 }

@@ -399,3 +399,9 @@ FodyWeavers.xsd
 
 # Auto Generated models
 src/WebUI/ClientApp/src/app/modules/shared/models/api/
+
+.github/
+.idea/
+.template.config/
+.obj/
+tests/
