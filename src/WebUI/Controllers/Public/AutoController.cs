@@ -53,10 +53,15 @@ public class AutoController : ApiControllerBase
     [HttpGet("card/get/{cardId}")]
     public async Task<ActionResult<CardDto>> GetCard(int cardId)
     {
-        var query = new GetCardQuery
-        {
-            Id = cardId
-        };
+        var query = new GetCardQuery { Id = cardId };
+        var result = await Mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpGet("card/list/get")]
+    public async Task<ActionResult<CardListDto>> GetCardList()
+    {
+        var query = new GetCardListQuery();
         var result = await Mediator.Send(query);
         return Ok(result);
     }

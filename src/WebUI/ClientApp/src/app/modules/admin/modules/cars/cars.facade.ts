@@ -4,8 +4,7 @@ import { ICarList } from "./models/car-list.model";
 import { CarsMapper } from "./services/cars.mapper";
 import { Injectable } from "@angular/core";
 import { ICarForm } from "./models/car-form.model";
-import { ICarListItem } from "./models/car-list-item.model";
-import { AutoDto } from "@app/web-api-client";
+import { AutoDto } from "@app/shared/models/api/auto/auto-dto.model";
 
 @Injectable({
     providedIn: 'root'

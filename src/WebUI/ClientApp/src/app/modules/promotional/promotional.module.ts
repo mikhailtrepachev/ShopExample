@@ -8,13 +8,15 @@ import { PromotionalAddPageComponent } from "./pages/promotional-add/promotional
 import { CarSelectorComponent } from "./components/car-selector/car-selector.component";
 import { PromotionalService } from "./services/promotional.service";
 import { CardFormComponent } from "./components/card-form/card-form.component";
+import { CardListComponent } from "./components/card-list/card-list.component";
 
 @NgModule({
     declarations: [
         PromotionalPageComponent,
         PromotionalAddPageComponent,
         CarSelectorComponent,
-        CardFormComponent
+        CardFormComponent,
+        CardListComponent
     ],
     imports: [
         PromotionalRoutingModule,

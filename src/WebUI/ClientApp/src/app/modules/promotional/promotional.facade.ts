@@ -8,6 +8,7 @@ import { PersonalAutoDto } from "@app/shared/models/api/auto/personal-auto-dto.m
 import { IPersonalCarList } from "./models/personal-car-list.model";
 import { ICardForm } from "./models/card.model";
 import { CardDto } from "@app/shared/models/api/auto/card-dto.model";
+import { ICardList } from "./models/card-list.model";
 
 @Injectable({
     providedIn: 'root'
@@ -23,6 +24,10 @@ export class PromotionalFacade {
 
     public getCard(cardId: number): Observable<CardDto> {
         return this._promotionalService.getCard(cardId);
+    }
+
+    public getCardList(): Observable<ICardList> {
+        return this._promotionalService.getCardList().pipe(map(res => PromotionalMapper.toCardList(res)));
     }
 
     public getPersonalCarList(): Observable<IPersonalCarList> {

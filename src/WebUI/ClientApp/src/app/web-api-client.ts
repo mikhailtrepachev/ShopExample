@@ -686,6 +686,7 @@ export interface IAutoClient {
     getPersonalAuto(personalAutoId: number): Observable<PersonalAutoDto>;
     getPersonalAutoList(): Observable<PersonalAutoListDto>;
     getCard(cardId: number): Observable<CardDto>;
+    getCardList(): Observable<CardListDto>;
     create(commandDto: CreateAutoCommandDto): Observable<AutoDto>;
     createPersonalAuto(commandDto: CreatePersonalAutoCommandDto): Observable<PersonalAutoDto>;
     createCard(commandDto: CreateCardCommandDto): Observable<CardDto>;
@@ -944,6 +945,54 @@ export class AutoClient implements IAutoClient {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = CardDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getCardList(): Observable<CardListDto> {
+        let url_ = this.baseUrl + "/api/autos/card/list/get";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCardList(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCardList(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<CardListDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<CardListDto>;
+        }));
+    }
+
+    protected processGetCardList(response: HttpResponseBase): Observable<CardListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = CardListDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -2087,6 +2136,50 @@ export interface ICardDto {
     personalAuto?: PersonalAutoDto;
     price?: number;
     isPromoted?: boolean;
+}
+
+export class CardListDto implements ICardListDto {
+    items?: CardDto[];
+
+    constructor(data?: ICardListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(CardDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): CardListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CardListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface ICardListDto {
+    items?: CardDto[];
 }
 
 export class CreateAutoCommandDto implements ICreateAutoCommandDto {

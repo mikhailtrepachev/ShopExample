@@ -1,0 +1,6 @@
+.card-hover{
+    &:hover{
+        background-color: darken($color: white, $amount: 15);
+        transition: all 0.3s linear;
+    }
+}

@@ -613,6 +613,26 @@
         }
       }
     },
+    "/api/autos/card/list/get": {
+      "get": {
+        "tags": [
+          "Auto"
+        ],
+        "operationId": "Auto_GetCardList",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardListDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/autos": {
       "post": {
         "tags": [
@@ -1205,6 +1225,18 @@
           },
           "isPromoted": {
             "type": "boolean"
+          }
+        }
+      },
+      "CardListDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CardDto"
+            }
           }
         }
       },

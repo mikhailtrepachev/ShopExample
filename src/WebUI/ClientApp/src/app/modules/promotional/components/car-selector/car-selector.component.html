@@ -1,4 +1,4 @@
-<p-toast></p-toast>
+
 
 <div class="d-grid gap-2 py-1" *ngFor="let personalCar of personalCarItems">
   <button type="button" class="btn btn-outline-primary btn-block selector" (click)="onSelectPersonalCar(personalCar)">
@@ -43,7 +43,7 @@
                         <label>
                             Model:
                         </label>
-                        <select class="form-select" formControlName="selectedModel">
+                        <select class="form-select" formControlName="selectedModel" (change)="onChangeModel()">
                             <ng-container *ngFor="let item of groupedItems">
                               <ng-container *ngIf="item.distributorName == this.form.value.selectedDistributor">
                                 <ng-container *ngFor="let car of item.cars">

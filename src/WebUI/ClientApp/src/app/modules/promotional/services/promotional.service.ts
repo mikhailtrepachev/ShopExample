@@ -3,6 +3,7 @@ import { Inject, Injectable } from "@angular/core";
 import { HttpService } from "@app/modules/shared/shared.module";
 import { AutoListDto } from "@app/shared/models/api/auto/auto-list-dto.model";
 import { CardDto } from "@app/shared/models/api/auto/card-dto.model";
+import { CardListDto } from "@app/shared/models/api/auto/card-list-dto.model";
 import { CreateCardCommandDto } from "@app/shared/models/api/auto/create-card-command-dto.model";
 import { CreatePersonalAutoCommandDto } from "@app/shared/models/api/auto/create-personal-auto-command-dto.model";
 import { PersonalAutoDto } from "@app/shared/models/api/auto/personal-auto-dto.model";
@@ -28,6 +29,11 @@ export class PromotionalService extends HttpService {
     public getCarList(): Observable<AutoListDto> {
         const url = `${this._baseUrl}api/autos/list`;
         return this._httpClient.get<AutoListDto>(url);
+    }
+
+    public getCardList(): Observable<CardListDto> {
+        const url = `${this._baseUrl}api/autos/card/list/get`;
+        return this._httpClient.get<CardListDto>(url);
     }
 
     public getPersonalCarList(): Observable<PersonalAutoListDto> {

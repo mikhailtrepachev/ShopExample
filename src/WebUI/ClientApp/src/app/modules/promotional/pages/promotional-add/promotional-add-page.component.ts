@@ -7,6 +7,7 @@ import { CarSelectorComponent } from "../../components/car-selector/car-selector
 import { IPersonalCarList } from "../../models/personal-car-list.model";
 import { IPersonalCarListItem } from "../../models/personal-car-list-item.model";
 import { ICardForm } from "../../models/card.model";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-promotional-add-page',
@@ -25,7 +26,8 @@ export class PromotionalAddPageComponent implements OnInit {
     @ViewChild(CarSelectorComponent) public carSelectorForm: CarSelectorComponent;
 
     constructor(
-        public readonly _promotionalFacade: PromotionalFacade
+        private readonly _promotionalFacade: PromotionalFacade,
+        private readonly _router: Router,
     ) { }
 
     public ngOnInit(): void {
@@ -33,7 +35,7 @@ export class PromotionalAddPageComponent implements OnInit {
     }
 
     public createPersonalCar(data: IPersonalCarForm): void {
-        this._promotionalFacade.createPersonalCar(data).subscribe();
+        this._promotionalFacade.createPersonalCar(data).subscribe(_ => this.loadCars());
     }
 
     public onCancel(): void {
@@ -46,10 +48,11 @@ export class PromotionalAddPageComponent implements OnInit {
     }
 
     public createCard(card: ICardForm): void {
-        this._promotionalFacade.createCard(card).subscribe();
+        this._promotionalFacade.createCard(card).subscribe(_ => this._router.navigate(['']));
     }
 
     private loadCars(): void {
+
         forkJoin({
             cars: this._promotionalFacade.getCarList(),
             personalCars: this._promotionalFacade.getPersonalCarList()
@@ -63,6 +66,6 @@ export class PromotionalAddPageComponent implements OnInit {
             error: error => {
                 console.error(error)
             }
-        });
+        });    
     }
 }

@@ -6,6 +6,8 @@ import { PersonalAutoListDto } from "@app/shared/models/api/auto/personal-auto-l
 import { IPersonalCarList } from "../models/personal-car-list.model";
 import { ICardForm } from "../models/card.model";
 import { CreateCardCommandDto } from "@app/shared/models/api/auto/create-card-command-dto.model";
+import { CardListDto } from "@app/shared/models/api/auto/card-list-dto.model";
+import { ICardList } from "../models/card-list.model";
 
 export class PromotionalMapper { 
     public static toCarList(data: AutoListDto): ICarList {
@@ -15,6 +17,17 @@ export class PromotionalMapper {
                 distributorName: car.distributorName,
                 modelName: car.modelName,
                 issueYear: car.issueYear
+            })) : [],
+        };
+    }
+
+    public static toCardList(data: CardListDto): ICardList { 
+        return {
+            items: data?.items.length > 0 ? data.items.map(card => ({
+                id: card.id,
+                personalAuto: card.personalAuto,
+                isPromoted: card.isPromoted,
+                price: card.price
             })) : [],
         };
     }

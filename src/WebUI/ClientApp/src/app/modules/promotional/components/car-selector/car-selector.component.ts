@@ -45,6 +45,13 @@ export class CarSelectorComponent implements OnChanges {
 
     public ngOnChanges(changes: SimpleChanges): void {
 
+        this.carItems = this.cars?.items || [];
+
+        this.personalCarItems = this.personalCars?.items || [];
+
+        this.groupingItems();
+
+
         this.form = this._formBuilder.group({
             selectedDistributor: [null, Validators.required],
             selectedModel: [null, Validators.required],
@@ -58,15 +65,6 @@ export class CarSelectorComponent implements OnChanges {
             horsePower: [null, Validators.required]
         });
 
-        console.log('ngOnChanges called with changes:', changes);
-
-        this.carItems = this.cars?.items || [];
-
-        this.personalCarItems = this.personalCars?.items || [];
-
-        this.groupingItems();
-
-        this.onChangeDistributor();
     }
 
     public onSubmit(): void {
@@ -86,6 +84,11 @@ export class CarSelectorComponent implements OnChanges {
             item.modelName === selectedModel &&
             item.issueYear === selectedYear) as AutoDto;
 
+        console.log(autos);
+        console.log(selectedDistributor);
+        console.log(selectedModel);
+        console.log(selectedYear);
+
         this.submitted.emit({
             id,
             autos,
@@ -95,30 +98,35 @@ export class CarSelectorComponent implements OnChanges {
             technicalState,
             wheelSize,
             horsePower
-        } as IPersonalCarForm )        
+        } as IPersonalCarForm )
+
+        this._messageService.add({ severity: 'success', summary: 'Success', detail: 'You have successfully added a car!' })
     }
 
     public onChangeDistributor(): void {
 
-      console.log(this.groupedItems);
-
       var distributorIndex = this.groupedItems.findIndex(item => item.distributorName === this.form.value.selectedDistributor);
 
       if (distributorIndex !== -1 && this.groupedItems[distributorIndex].cars.length > 0) {
-        const firstCar = this.groupedItems[distributorIndex].cars[0];
+        const firstCarModel = this.groupedItems[distributorIndex].cars[0];
         this.form.patchValue({
-          selectedModel: firstCar.modelName,
-          selectedYear: firstCar.issueYears[0]
+          selectedModel: firstCarModel.modelName,
+          selectedYear: firstCarModel.issueYears[0]
         });
-      } else {
-        const firstCar = this.carItems[0]
-        console.log(firstCar);
-        this.form.patchValue({
-            selectedDistributor: firstCar.distributorName,
-            selectedModel: firstCar.modelName,
-            selectedYear: firstCar.issueYear
-        });
-      }
+      };
+    }
+
+    public onChangeModel(): void {
+        var distributorIndex = this.groupedItems.findIndex(item => item.distributorName === this.form.value.selectedDistributor);
+        console.log(this.groupedItems[distributorIndex]);
+        var modelIndex = this.groupedItems[distributorIndex].cars.findIndex(car => car.modelName === this.form.value.selectedModel);
+
+        if (distributorIndex !== -1 && this.groupedItems[distributorIndex].cars.length > 0) {
+            const firstCar = this.groupedItems[distributorIndex].cars[modelIndex];
+            this.form.patchValue({
+              selectedYear: firstCar.issueYears[0]
+            });
+          };
     }
 
     public onSelectPersonalCar(personalCar: IPersonalCarListItem): void {
