@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { ICardListItem } from "../../models/card-list-item.model";
 
 @Component({
@@ -7,11 +7,11 @@ import { ICardListItem } from "../../models/card-list-item.model";
     styleUrls: ['./card-detail.component.scss']
 })
 
-export class CardDetailComponent implements OnChanges {
+export class CardDetailComponent implements OnInit {
 
-    @Input() public card: ICardListItem = null;
+    @Input() public card: ICardListItem;
     
-    public ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes)
+    public ngOnInit(): void {
+
     }
 }

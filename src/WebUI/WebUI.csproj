@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="CleanArchitecture.Application.IntegrationTests" />
+        <InternalsVisibleTo Include="ShopExample.Application.IntegrationTests" />
     </ItemGroup>
 
     <ItemGroup>

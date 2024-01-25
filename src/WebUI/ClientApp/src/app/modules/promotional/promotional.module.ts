@@ -16,11 +16,11 @@ import { PromotionalDetailPage } from "./pages/promotional-detail/promotional-de
     declarations: [
         PromotionalPageComponent,
         PromotionalAddPageComponent,
+        PromotionalDetailPage,
         CarSelectorComponent,
         CardFormComponent,
         CardListComponent,
         CardDetailComponent,
-        PromotionalDetailPage
     ],
     imports: [
         PromotionalRoutingModule,

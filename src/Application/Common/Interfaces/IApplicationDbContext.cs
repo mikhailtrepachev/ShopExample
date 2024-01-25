@@ -5,15 +5,13 @@ namespace ShopExample.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
-    DbSet<TodoList> TodoLists { get; }
-
-    DbSet<TodoItem> TodoItems { get; }
-    
     DbSet<Domain.Entities.Auto> Autos { get; }
     
     DbSet<PersonalAuto> PersonalAutos { get; }
     
     DbSet<Card> Cards { get; }
+    
+    DbSet<Order> Orders { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

@@ -15,6 +15,8 @@ import { IPersonalCarListItem } from "../models/personal-car-list-item.model";
 import { PersonalAutoDto } from "@app/shared/models/api/auto/personal-auto-dto.model";
 import { ICardListItem } from "../models/card-list-item.model";
 import { CardDto } from "@app/shared/models/api/auto/card-dto.model";
+import { AutoDto } from "@app/shared/models/api/auto/auto-dto.model";
+import { ICarListItem } from "../models/car-list-item.model";
 
 export class PromotionalMapper { 
     public static toCarList(data: AutoListDto): ICarList {
@@ -36,6 +38,15 @@ export class PromotionalMapper {
             price: data.price,
             description: data.description
         } as ICardListItem;
+    }
+
+    public static toCar(data: AutoDto): ICarListItem {
+        return {
+            id: data.id,
+            distributorName: data.distributorName,
+            modelName: data.modelName,
+            issueYear: data.issueYear
+        } as ICarListItem;
     }
 
     public static toCardList(data: CardListDto): ICardList { 
@@ -69,7 +80,7 @@ export class PromotionalMapper {
     public static toPersonalCar(data: PersonalAutoDto): IPersonalCarListItem {
         return {
             id: data.id,
-            autos: data.autos,
+            autos: this.toCar(data.autos),
             wheelSize: data.wheelSize,
             registrationNumber: data.registrationNumber,
             registrationState: registrationStates.find(state => state.type === data.registrationState),

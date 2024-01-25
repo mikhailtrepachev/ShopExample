@@ -24,14 +24,11 @@ export class PromotionalDetailPage implements OnInit{
     public ngOnInit(): void {
 
         this.cardId = this._route.snapshot.params.id;
-
         this.loadCard(this.cardId);
     }
 
     private loadCard(cardId: number): void {
         this._promotionalFacade.getCard(cardId).pipe(
-            first(),
-            tap(card => this.card = card)
-        ).subscribe();
+        ).subscribe(card => this.card = card);
     }
 }
