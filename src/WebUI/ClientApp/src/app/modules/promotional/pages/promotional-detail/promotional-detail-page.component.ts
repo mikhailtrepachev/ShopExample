@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { PromotionalFacade } from "../../promotional.facade";
 import { ActivatedRoute, Route, Router } from "@angular/router";
 import { ICardListItem } from "../../models/card-list-item.model";
-import { first, tap } from "rxjs";
 
 @Component({
     selector: 'app-promotional-detail-page',

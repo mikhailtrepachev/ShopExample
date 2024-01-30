@@ -623,6 +623,128 @@ export class AutoClient implements IAutoClient {
     }
 }
 
+export interface IOrderClient {
+    get(orderId: number): Observable<OrderDto>;
+    create(commandDto: CreateOrderCommandDto): Observable<OrderDto>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class OrderClient implements IOrderClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    get(orderId: number): Observable<OrderDto> {
+        let url_ = this.baseUrl + "/api/Order/{orderId}";
+        if (orderId === undefined || orderId === null)
+            throw new Error("The parameter 'orderId' must be defined.");
+        url_ = url_.replace("{orderId}", encodeURIComponent("" + orderId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<OrderDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<OrderDto>;
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<OrderDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = OrderDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    create(commandDto: CreateOrderCommandDto): Observable<OrderDto> {
+        let url_ = this.baseUrl + "/api/Order";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(commandDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<OrderDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<OrderDto>;
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<OrderDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = OrderDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export class WeatherForecast implements IWeatherForecast {
     date?: Date;
     temperatureC?: number;
@@ -1145,6 +1267,106 @@ export interface ICreateCardCommandDto {
     price?: number;
     description?: string | undefined;
     isPromoted?: boolean;
+}
+
+export class OrderDto implements IOrderDto {
+    id?: number;
+    cards?: CardDto;
+    fullName?: string;
+    contactEmail?: string;
+    message?: string;
+
+    constructor(data?: IOrderDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.cards = _data["cards"] ? CardDto.fromJS(_data["cards"]) : <any>undefined;
+            this.fullName = _data["fullName"];
+            this.contactEmail = _data["contactEmail"];
+            this.message = _data["message"];
+        }
+    }
+
+    static fromJS(data: any): OrderDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OrderDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["cards"] = this.cards ? this.cards.toJSON() : <any>undefined;
+        data["fullName"] = this.fullName;
+        data["contactEmail"] = this.contactEmail;
+        data["message"] = this.message;
+        return data;
+    }
+}
+
+export interface IOrderDto {
+    id?: number;
+    cards?: CardDto;
+    fullName?: string;
+    contactEmail?: string;
+    message?: string;
+}
+
+export class CreateOrderCommandDto implements ICreateOrderCommandDto {
+    cardId?: number;
+    fullName?: string;
+    contactEmail?: string;
+    message?: string;
+
+    constructor(data?: ICreateOrderCommandDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.cardId = _data["cardId"];
+            this.fullName = _data["fullName"];
+            this.contactEmail = _data["contactEmail"];
+            this.message = _data["message"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrderCommandDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrderCommandDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["cardId"] = this.cardId;
+        data["fullName"] = this.fullName;
+        data["contactEmail"] = this.contactEmail;
+        data["message"] = this.message;
+        return data;
+    }
+}
+
+export interface ICreateOrderCommandDto {
+    cardId?: number;
+    fullName?: string;
+    contactEmail?: string;
+    message?: string;
 }
 
 export interface FileResponse {

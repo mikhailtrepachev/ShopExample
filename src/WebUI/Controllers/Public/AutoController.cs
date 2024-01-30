@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ShopExample.Application.Auto.Commands;
 using ShopExample.Application.Auto.Dto;
@@ -41,7 +42,7 @@ public class AutoController : ApiControllerBase
         var result = await Mediator.Send(query);
         return Ok(result);
     }
-
+    
     [HttpGet("personal/get/list")]
     public async Task<ActionResult<PersonalAutoListDto>> GetPersonalAutoList()
     {

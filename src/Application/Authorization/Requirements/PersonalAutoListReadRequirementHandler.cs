@@ -12,9 +12,9 @@ public class PersonalAutoListReadRequirementHandler : IAuthorizationHandler<Pers
         _currentUserService = currentUserService;
     }
 
-    public async Task<AuthorizationResult> Handle(PersonalAutoListReadRequirement requirement,
+    public Task<AuthorizationResult> Handle(PersonalAutoListReadRequirement requirement,
         CancellationToken cancellationToken)
     {
-        return AuthorizationResult.Succeed();
+        return Task.FromResult(AuthorizationResult.Fail());
     }
 }

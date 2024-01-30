@@ -20,11 +20,9 @@ public static class ConfigureServices
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehaviour<,>));
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
-
+            cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(RequestAuthorizationBehaviour<,>));
         });
-
-        services.AddAuthorizersFromAssembley(Assembly.GetAssembly(typeof(IAuthorizer<>)));
-
+        
         return services;
     }
 }

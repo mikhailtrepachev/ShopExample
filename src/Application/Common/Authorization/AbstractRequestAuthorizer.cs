@@ -2,14 +2,15 @@
 
 namespace ShopExample.Application.Common.Authorization;
 
-public abstract class AbstractAuthorizer<TRequest> : IAuthorizer<TRequest>
+public abstract class AbstractRequestAuthorizer<TRequest> : IAuthorizer<TRequest>
 {
-    private readonly HashSet<IAuthorizationRequirement> _requirements = new HashSet<IAuthorizationRequirement>();
+    private HashSet<IAuthorizationRequirement> _requirements = new HashSet<IAuthorizationRequirement>();
 
     public IEnumerable<IAuthorizationRequirement> Requirements => _requirements;
 
     protected void UseRequirement(IAuthorizationRequirement requirement)
     {
+        if (requirement == null) return;
         _requirements.Add(requirement);
     }
 

@@ -6,11 +6,6 @@ public class AuthorizationResult
     
     public string FailureMessage { get; set; }
 
-    public AuthorizationResult()
-    {
-        
-    }
-
     private AuthorizationResult(bool isAuthorized, string failureMessage)
     {
         IsAuthorized = isAuthorized;
