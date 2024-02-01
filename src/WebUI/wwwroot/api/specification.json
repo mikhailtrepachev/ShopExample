@@ -6,29 +6,6 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/WeatherForecast": {
-      "get": {
-        "tags": [
-          "WeatherForecast"
-        ],
-        "operationId": "WeatherForecast_Get",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/autos/{autoId}": {
       "get": {
         "tags": [
@@ -346,6 +323,26 @@
         }
       }
     },
+    "/api/Order/list": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "operationId": "Order_GetList",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderListDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Order": {
       "post": {
         "tags": [
@@ -381,28 +378,6 @@
   },
   "components": {
     "schemas": {
-      "WeatherForecast": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "temperatureC": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "temperatureF": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "summary": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
       "AutoDto": {
         "type": "object",
         "additionalProperties": false,
@@ -669,6 +644,18 @@
           },
           "message": {
             "type": "string"
+          }
+        }
+      },
+      "OrderListDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderDto"
+            }
           }
         }
       },

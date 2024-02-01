@@ -1,7 +1,9 @@
+<p-toast></p-toast>
+
 <div class="container mt-5">
     <div class="row">
       <div class="col-lg-8">
-        <!-- Car Details Section -->
+
         <div class="card mb-3">
           <img src="../../../../../assets/dsc06532-1298x730.jpg" class="card-img-top" alt="Car Image">
           <div class="card-body">
@@ -10,7 +12,6 @@
           </div>
         </div>
 
-        <!-- Seller Information Section -->
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Seller Information</h5>
@@ -24,7 +25,6 @@
         </div>
       </div>
 
-      <!-- Price and Contact Form Section -->
       <div class="col-lg-4">
         <div class="card">
           <div class="card-body">
@@ -36,18 +36,18 @@
         <div class="card mt-3">
           <div class="card-body">
             <h5 class="card-title">Contact the Seller</h5>
-            <form>
+            <form [formGroup]="form" (submit)="onSubmit()">
               <div class="mb-3">
                 <label for="fullName" class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="fullName" required>
+                <input type="text" class="form-control" id="fullName" formControlName="fullName" required>
               </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="email" required>
+                <input type="email" class="form-control" id="email" formControlName="email" required>
               </div>
               <div class="mb-3">
                 <label for="message" class="form-label">Your Message</label>
-                <textarea class="form-control" id="message" rows="4" required></textarea>
+                <textarea class="form-control" id="message" rows="4" formControlName="message" required></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Send Message</button>
             </form>

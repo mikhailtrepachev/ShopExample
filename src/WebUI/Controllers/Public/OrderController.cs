@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ShopExample.Application.Orders.Commands;
@@ -18,7 +19,17 @@ public class OrderController : ApiControllerBase
         
         return result;
     }
-        
+
+    [HttpGet("list")]
+    public async Task<ActionResult<OrderListDto>> GetList()
+    {
+        var query = new GetOrderListQuery();
+
+        var result = await Mediator.Send(query);
+
+        return result;
+    }
+    
     [HttpPost]
     public async Task<ActionResult<OrderDto>> Create(CreateOrderCommandDto commandDto)
     {

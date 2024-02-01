@@ -15,6 +15,11 @@ export const routes: Routes = [
         path: 'admin',
         canActivate: [AuthorizeGuard],
         loadChildren: () => import('@app/modules/admin/admin.module').then(m => m.AdminModule),
+      },
+      {
+        path: 'orders',
+        canActivate: [AuthorizeGuard],
+        loadChildren: () => import('@app/modules/order/order.module').then(m => m.OrderModule)
       }
     ]
   }

@@ -10,6 +10,8 @@ import { ICardForm } from "./models/card.model";
 import { CardDto } from "@app/shared/models/api/auto/card-dto.model";
 import { ICardList } from "./models/card-list.model";
 import { ICardListItem } from "./models/card-list-item.model";
+import { IOrderForm } from "./models/order.module";
+import { OrderDto } from "@app/shared/models/api/orders/order-dto.model";
 
 @Injectable({
     providedIn: 'root'
@@ -41,6 +43,10 @@ export class PromotionalFacade {
 
     public createCard(card: ICardForm): Observable<CardDto> {
         return this._promotionalService.createCard(PromotionalMapper.toCardCommand(card));
+    }
+
+    public createOrder(order: IOrderForm): Observable<OrderDto> {
+        return this._promotionalService.createOrder(PromotionalMapper.toOrderCommand(order));
     }
 
 }

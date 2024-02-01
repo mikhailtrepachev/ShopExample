@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { PromotionalFacade } from "../../promotional.facade";
 import { ActivatedRoute, Route, Router } from "@angular/router";
 import { ICardListItem } from "../../models/card-list-item.model";
+import { IOrderForm } from "../../models/order.module";
 
 @Component({
     selector: 'app-promotional-detail-page',
@@ -24,6 +25,10 @@ export class PromotionalDetailPage implements OnInit{
 
         this.cardId = this._route.snapshot.params.id;
         this.loadCard(this.cardId);
+    }
+
+    public createOrder(order: IOrderForm): void {
+        this._promotionalFacade.createOrder(order);
     }
 
     private loadCard(cardId: number): void {

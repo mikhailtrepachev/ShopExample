@@ -8,6 +8,8 @@ import { CreateCardCommandDto } from "@app/shared/models/api/auto/create-card-co
 import { CreatePersonalAutoCommandDto } from "@app/shared/models/api/auto/create-personal-auto-command-dto.model";
 import { PersonalAutoDto } from "@app/shared/models/api/auto/personal-auto-dto.model";
 import { PersonalAutoListDto } from "@app/shared/models/api/auto/personal-auto-list-dto.model";
+import { OrderDto } from "@app/shared/models/api/orders/order-dto.model";
+import { CreateOrderCommandDto } from "@app/web-api-client";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -49,5 +51,10 @@ export class PromotionalService extends HttpService {
     public createCard(card: CreateCardCommandDto): Observable<CardDto> {
         const url = `${this._baseUrl}api/autos/card/create`;
         return this._httpClient.post<CardDto>(url, card);
+    }
+
+    public createOrder(order: CreateOrderCommandDto): Observable<OrderDto> {
+        const url = `${this._baseUrl}api/order`;
+        return this._httpClient.post<OrderDto>(url, order);
     }
 }

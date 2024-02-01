@@ -17,6 +17,8 @@ import { ICardListItem } from "../models/card-list-item.model";
 import { CardDto } from "@app/shared/models/api/auto/card-dto.model";
 import { AutoDto } from "@app/shared/models/api/auto/auto-dto.model";
 import { ICarListItem } from "../models/car-list-item.model";
+import { IOrderForm } from "../models/order.module";
+import { CreateOrderCommandDto } from "@app/web-api-client";
 
 export class PromotionalMapper { 
     public static toCarList(data: AutoListDto): ICarList {
@@ -109,5 +111,13 @@ export class PromotionalMapper {
             price: card.price,
             description: card.description
         } as CreateCardCommandDto;
+    }
+
+    public static toOrderCommand(order: IOrderForm): CreateOrderCommandDto {
+        return {
+            fullName: order.fullName,
+            contactEmail: order.email,
+            message: order.message
+        } as CreateOrderCommandDto;
     }
 }
